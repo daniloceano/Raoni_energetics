@@ -12,6 +12,11 @@ input_data = input_data.assign_coords({'bottom_top': bottom_top_coords})  # Assi
 input_data = input_data.sortby('bottom_top', ascending=False)
 input_data = input_data.drop('xtime')
 
+# Pre-process spatial coordinates
+input_data['south_north'] = input_data['lat'][:,0]
+input_data['west_east'] = input_data['lon'][0,:]
+input_data = input_data.rename({'south_north': 'latitude', 'west_east': 'longitude'})
+
 time = input_data.time
 print(f"times: {time.values}")
 
