@@ -5,17 +5,20 @@ from metpy.calc import vertical_velocity_pressure
 from metpy.constants import g
 from wrf import interplevel
 
-input_data = xr.open_mfdataset("coawst_raoni/*.nc")
+input_data = xr.open_mfdataset("data_vCPAM/coawst/*.nc")
+output_name = "data_vCPAM/Raoni_cowast.nc"
+
+latitude_name, longitude_name = 'latitude', 'longitude'
 
 bottom_top_coords = input_data['bottom_top'].values  # Extract the values from the bottom_top DataArray
 input_data = input_data.assign_coords({'bottom_top': bottom_top_coords})  # Assign these values as coordinates
 input_data = input_data.sortby('bottom_top', ascending=False)
 input_data = input_data.drop('xtime')
 
-# Pre-process spatial coordinates
-input_data['south_north'] = input_data['lat'][:,0]
-input_data['west_east'] = input_data['lon'][0,:]
-input_data = input_data.rename({'south_north': 'latitude', 'west_east': 'longitude'})
+# # Pre-process spatial coordinates
+# input_data['south_north'] = input_data[latitude_name][:,0]
+# input_data['west_east'] = input_data[longitude_name][0,:]
+# input_data = input_data.rename({'south_north': 'latitude', 'west_east': 'longitude'})
 
 time = input_data.time
 print(f"times: {time.values}")
@@ -81,10 +84,9 @@ output_data['omega']['long_name']  = 'vertical velocity in pressure levels'
 output_data['hgt']['units']  = str(hgt_isob.metpy.units)
 output_data['hgt']['long_name']  = 'Geopotential  Height'
 
-fname = "Raoni_isobaric.nc"
 encoding = {'time': {'units': 'hours since 2000-01-01', 'calendar': 'gregorian'}}
-output_data.to_netcdf(fname, encoding=encoding)
-print(fname+' created!')
+output_data.to_netcdf(output_name, encoding=encoding)
+print(output_name+' created!')
 
-ds = xr.open_dataset(fname)
+ds = xr.open_dataset(output_name)
 print(f"time of saved file: {ds.time.values}")
