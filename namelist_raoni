@@ -1,0 +1,10 @@
+standard_name;Variable;Units
+Air Temperature;T;K
+Eastward Wind Component;U;m/s
+Northward Wind Component;V;m/s
+Geopotential Height;GPH;m
+Longitude;lon;degrees_east
+Latitude;lat;degrees_north
+Time;Time;datetime64
+Vertical Level;plevels;hPa
+Omega Velocity;W;Pa/s
