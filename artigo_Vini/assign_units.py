@@ -2,7 +2,9 @@ import xarray as xr
 import numpy as np
 
 # Abrir o dataset
-ds = xr.open_dataset("wrfout_d01_2021-06-25_01_00_00_reduced_regular_interpolated.nc")
+infile = "Raoni_COWAST.nc"
+outfile = f"{infile}_processed.nc"
+ds = xr.open_dataset(infile)
 
 # Selecionar apenas as variáveis de interesse
 variables_to_keep = ["T", "QVAPOR", "U", "V", "W", "GPH", "plevels"]
@@ -33,6 +35,6 @@ for var, unit in units_dict.items():
         ds_filtered[var].attrs["units"] = unit
 
 # Salvar o dataset processado com compactação
-ds_filtered.to_netcdf("Roani_WRF_filtered.nc")
+ds_filtered.to_netcdf(outfile, mode='w')
 
-print("Dataset exportado com sucesso para 'Roani_WRF_filtered.nc'.")
+print(f"Dataset exportado com sucesso para '{outfile}'.")
