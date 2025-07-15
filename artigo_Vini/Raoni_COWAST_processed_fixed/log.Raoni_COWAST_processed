@@ -1,0 +1,115 @@
+2025-07-15 18:51:22,701 - lorenzcycletoolkit - INFO - Starting LEC analysis
+2025-07-15 18:51:22,701 - lorenzcycletoolkit - INFO - Command line arguments: Namespace(infile='../Raoni_energetics/artigo_Vini/Raoni_COWAST_processed.nc', residuals=True, fixed=True, track=False, choose=False, zeta=False, mpas=False, plots=True, verbosity=True, cdsapi=False, trackfile='inputs/track', box_limits='inputs/box_limits', outname=None)
+2025-07-15 18:51:22,701 - lorenzcycletoolkit - DEBUG - Variables specified by the user in: inputs/namelist
+2025-07-15 18:51:22,701 - lorenzcycletoolkit - DEBUG - Attempting to read inputs/namelist file...
+2025-07-15 18:51:22,705 - lorenzcycletoolkit - DEBUG - List of variables found:
+                                standard_name Variable  Units
+Air Temperature               air_temperature        T      K
+Geopotential Height       geopotential_height      GPH      m
+Omega Velocity                          omega        W  hPa/s
+Eastward Wind Component         eastward_wind        U    m/s
+Northward Wind Component       northward_wind        V    m/s
+Longitude                                 NaN      lat    NaN
+Latitude                                  NaN      lon    NaN
+Time                                      NaN     Time    NaN
+Vertical Level                            NaN  plevels    NaN
+2025-07-15 18:51:22,705 - lorenzcycletoolkit - DEBUG - Opening input data... 
+2025-07-15 18:51:26,878 - lorenzcycletoolkit - DEBUG - Ok.
+2025-07-15 18:51:26,880 - lorenzcycletoolkit - DEBUG - Assigning geospatial coordinates in radians... 
+2025-07-15 18:51:26,887 - lorenzcycletoolkit - DEBUG - Ok.
+2025-07-15 18:51:26,906 - lorenzcycletoolkit - DEBUG - Data opened successfully.
+2025-07-15 18:51:26,914 - lorenzcycletoolkit - DEBUG - Loading data into memory..
+2025-07-15 18:51:47,048 - lorenzcycletoolkit - DEBUG - Data loaded into memory.
+2025-07-15 18:51:47,050 - lorenzcycletoolkit - INFO - Bounding box: min_lon=-60.0, max_lon=-35.0, min_lat=-45.0, max_lat=-25.0
+2025-07-15 18:51:55,083 - lorenzcycletoolkit - DEBUG - Computing Az...
+2025-07-15 18:51:55,208 - lorenzcycletoolkit - DEBUG - Ok.
+2025-07-15 18:51:55,209 - lorenzcycletoolkit - DEBUG - Computing Ae...
+2025-07-15 18:51:55,598 - lorenzcycletoolkit - DEBUG - Ok.
+2025-07-15 18:51:55,607 - lorenzcycletoolkit - DEBUG - Computing Kz...
+2025-07-15 18:51:55,627 - lorenzcycletoolkit - DEBUG - Ok.
+2025-07-15 18:51:55,627 - lorenzcycletoolkit - DEBUG - Computing Ke...
+2025-07-15 18:51:56,205 - lorenzcycletoolkit - DEBUG - Ok.
+2025-07-15 18:51:56,205 - lorenzcycletoolkit - INFO - Computed energy contents
+2025-07-15 18:51:56,205 - lorenzcycletoolkit - DEBUG - Calculating CZ...
+2025-07-15 18:51:56,238 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:51:56,239 - lorenzcycletoolkit - DEBUG - Calculating CA...
+2025-07-15 18:51:57,296 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:51:57,297 - lorenzcycletoolkit - DEBUG - Calculating CK...
+2025-07-15 18:52:00,271 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:52:00,272 - lorenzcycletoolkit - DEBUG - Calculating CE...
+2025-07-15 18:52:00,659 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:52:00,664 - lorenzcycletoolkit - INFO - Computed conversion terms
+2025-07-15 18:52:00,664 - lorenzcycletoolkit - DEBUG - Calculating BAZ...
+2025-07-15 18:52:01,961 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:52:01,962 - lorenzcycletoolkit - DEBUG - Calculating BAE...
+2025-07-15 18:52:02,974 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:52:02,974 - lorenzcycletoolkit - DEBUG - Calculating BKZ...
+2025-07-15 18:52:05,152 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:52:05,152 - lorenzcycletoolkit - DEBUG - Calculating BKE...
+2025-07-15 18:52:06,517 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:52:06,517 - lorenzcycletoolkit - DEBUG - Calculating BΦZ...
+2025-07-15 18:52:06,536 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:52:06,536 - lorenzcycletoolkit - DEBUG - Calculating BΦE...
+2025-07-15 18:52:06,881 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:52:06,881 - lorenzcycletoolkit - INFO - Computed boundary terms
+2025-07-15 18:52:06,881 - lorenzcycletoolkit - DEBUG - Computing Gz...
+2025-07-15 18:52:06,899 - lorenzcycletoolkit - DEBUG - Ok.
+2025-07-15 18:52:06,900 - lorenzcycletoolkit - DEBUG - Computing Ge...
+2025-07-15 18:52:07,157 - lorenzcycletoolkit - DEBUG - Ok.
+2025-07-15 18:52:07,158 - lorenzcycletoolkit - INFO - Computed generation dissipation terms
+2025-07-15 18:52:07,161 - lorenzcycletoolkit - DEBUG - Estimating budget values using finite differences...
+2025-07-15 18:52:07,162 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:52:07,162 - lorenzcycletoolkit - DEBUG - Estimating residuals...
+2025-07-15 18:52:07,163 - lorenzcycletoolkit - DEBUG - Done.
+2025-07-15 18:52:07,164 - lorenzcycletoolkit - INFO - Computed budget and residuals
+2025-07-15 18:52:07,168 - lorenzcycletoolkit - INFO - Results saved to LEC_Results/Raoni_COWAST_processed_fixed/Raoni_COWAST_processed_fixed_results.csv
+2025-07-15 18:52:07,184 - lorenzcycletoolkit - INFO - Generating plots..
+2025-07-15 18:52:07,184 - lorenzcycletoolkit - INFO - Plotting timeseries...
+2025-07-15 18:52:07,698 - lorenzcycletoolkit - INFO - Figure saved for energy in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/timeseries
+2025-07-15 18:52:07,836 - lorenzcycletoolkit - INFO - Figure saved for conversion in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/timeseries
+2025-07-15 18:52:07,967 - lorenzcycletoolkit - INFO - Figure saved for boundary in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/timeseries
+2025-07-15 18:52:08,104 - lorenzcycletoolkit - INFO - Figure saved for budget_diff in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/timeseries
+2025-07-15 18:52:08,238 - lorenzcycletoolkit - INFO - Figure saved for residuals in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/timeseries
+2025-07-15 18:52:08,378 - lorenzcycletoolkit - INFO - Figure saved for generation_dissipation in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/timeseries
+2025-07-15 18:52:08,511 - lorenzcycletoolkit - INFO - Figure saved for comparing_generation in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/timeseries
+2025-07-15 18:52:08,633 - lorenzcycletoolkit - INFO - Figure saved for comparing_dissipation in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/timeseries
+2025-07-15 18:52:08,633 - lorenzcycletoolkit - INFO - Successfully generated time series plot.
+2025-07-15 18:52:08,633 - lorenzcycletoolkit - INFO - Plotting box limits on map...
+2025-07-15 18:52:09,574 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures
+2025-07-15 18:52:09,574 - lorenzcycletoolkit - INFO - Successfully generated box limits plot.
+2025-07-15 18:52:09,574 - lorenzcycletoolkit - INFO - Plotting boxplots...
+2025-07-15 18:52:09,603 - lorenzcycletoolkit - INFO - Creating boxplot for each time
+2025-07-15 18:52:12,942 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/boxplots
+2025-07-15 18:52:16,383 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/boxplots
+2025-07-15 18:52:18,452 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/boxplots
+2025-07-15 18:52:18,457 - lorenzcycletoolkit - INFO - Creating boxplot for each vertical level
+2025-07-15 18:52:19,363 - lorenzcycletoolkit - INFO - Created ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/boxplots/boxplot_vertical_levels_energy.png
+2025-07-15 18:52:20,442 - lorenzcycletoolkit - INFO - Created ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/boxplots/boxplot_vertical_levels_conversion.png
+2025-07-15 18:52:21,040 - lorenzcycletoolkit - INFO - Created ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/boxplots/boxplot_vertical_levels_generation_dissipation.png
+2025-07-15 18:52:21,046 - lorenzcycletoolkit - INFO - Creating boxplot for each term
+2025-07-15 18:52:21,156 - lorenzcycletoolkit - INFO - boxplot_terms_energy.png created
+2025-07-15 18:52:21,278 - lorenzcycletoolkit - INFO - boxplot_terms_conversion.png created
+2025-07-15 18:52:21,400 - lorenzcycletoolkit - INFO - boxplot_terms_boundary.png created
+2025-07-15 18:52:21,528 - lorenzcycletoolkit - INFO - boxplot_terms_budget_diff.png created
+2025-07-15 18:52:21,649 - lorenzcycletoolkit - INFO - boxplot_terms_residuals.png created
+2025-07-15 18:52:21,748 - lorenzcycletoolkit - INFO - boxplot_terms_generation_dissipation.png created
+2025-07-15 18:52:21,874 - lorenzcycletoolkit - INFO - boxplot_terms_comparing_generation.png created
+2025-07-15 18:52:21,972 - lorenzcycletoolkit - INFO - boxplot_terms_comparing_dissipation.png created
+2025-07-15 18:52:21,978 - lorenzcycletoolkit - INFO - Successfully generated boxplot terms.
+2025-07-15 18:52:22,005 - lorenzcycletoolkit - INFO - Creating hovmoller diagrams
+2025-07-15 18:52:22,661 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/Raoni_COWAST_processed_fixed/Figures/hovmollers/hovmoller_energy.png
+2025-07-15 18:52:23,596 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/Raoni_COWAST_processed_fixed/Figures/hovmollers/hovmoller_conversion.png
+2025-07-15 18:52:24,017 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/Raoni_COWAST_processed_fixed/Figures/hovmollers/hovmoller_generation_dissipation.png
+2025-07-15 18:52:24,017 - lorenzcycletoolkit - INFO - Hovmoller diagrams created
+2025-07-15 18:52:24,018 - lorenzcycletoolkit - INFO - Successfully generated Hovmöller plot.
+2025-07-15 18:52:24,801 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/LEC/LEC_example.png
+2025-07-15 18:52:24,926 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/LEC/LEC_2021-06-25.png
+2025-07-15 18:52:25,045 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/LEC/LEC_2021-06-26.png
+2025-07-15 18:52:25,170 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/LEC/LEC_2021-06-27.png
+2025-07-15 18:52:25,293 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/LEC/LEC_2021-06-28.png
+2025-07-15 18:52:25,420 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/LEC/LEC_2021-06-29.png
+2025-07-15 18:52:25,542 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/LEC/LEC_2021-06-30.png
+2025-07-15 18:52:25,662 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/LEC/LEC_2021-07-01.png
+2025-07-15 18:52:25,785 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_COWAST_processed_fixed/Figures/LEC/LEC_2021-07-02.png
+2025-07-15 18:52:25,785 - lorenzcycletoolkit - INFO - Successfully generated Lorenz cycle plot.
+2025-07-15 18:52:25,785 - lorenzcycletoolkit - INFO - --- 58.87386345863342 seconds running fixed framework ---
