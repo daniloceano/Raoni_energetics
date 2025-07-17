@@ -1,7 +1,7 @@
 ;standard_name;Variable;Units
 Air Temperature;air_temperature;T;K
 Geopotential Height;geopotential_height;GPH;m
-Omega Velocity;omega;W;hPa/s
+Omega Velocity;omega;W;Pa/s
 Eastward Wind Component;eastward_wind;U;m/s
 Northward Wind Component;northward_wind;V;m/s
 Longitude;;lat

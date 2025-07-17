@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 
 # Abrir o dataset
-infile = "Raoni_COWAST.nc"
-outfile = f"{infile}_processed.nc"
+infile = "Raoni_WRF.nc"
+outfile = infile.replace(".nc", "_processed.nc")
 ds = xr.open_dataset(infile)
 
 # Selecionar apenas as variáveis de interesse
@@ -40,13 +40,16 @@ if rename_dict:
 for var in ds_filtered.data_vars:
     ds_filtered[var] = ds_filtered[var].astype(np.float32)
 
+# Dividir altura geopotencial por 9.81 para converter de m²/s² para m
+ds_filtered['GPH'] = ds_filtered['GPH'] / 9.81
+
 # Adicionar unidades às variáveis
 units_dict = {
     "T": "K",  # Kelvin
     "QVAPOR": "kg/kg",  # Razão de mistura do vapor d'água
     "U": "m/s",  # Componente zonal do vento
     "V": "m/s",  # Componente meridional do vento
-    "W": "hPa/s",  # Velocidade vertical
+    "W": "Pa/s",  # Velocidade vertical
     "GPH": "m",  # Altura geopotencial
     "plevels": "hPa"  # Níveis de pressão
 }
