@@ -9,7 +9,7 @@ for infile in infiles:
     print(f"Processando o arquivo: {infile}")
 
     # Definir o nome do arquivo de saída
-    outfile = infile.replace(".nc", "_processed.nc")
+    outfile = infile.replace(".nc", "_processed_v2.nc")
 
     # Abrir o dataset usando xarray
     ds = xr.open_dataset(infile)
@@ -17,6 +17,9 @@ for infile in infiles:
     # Selecionar apenas as variáveis de interesse
     variables_to_keep = ["T", "QVAPOR", "U", "V", "W", "GPH", "plevels"]
     ds_filtered = ds[variables_to_keep]
+
+    # Usar só de 900 hPa a 100 hPa
+    ds_filtered = ds_filtered.sel(plevels=slice(100, 900))
 
     # Garantir que 'Time' seja uma coordenada indexada
     if 'Time' not in ds_filtered.coords:
@@ -36,7 +39,6 @@ for infile in infiles:
     # Remover as coordenadas 'XTIME' e 'Times'
     del ds_filtered.coords['XTIME']
     del ds_filtered.coords['Times']
-
 
     # Renomear variáveis inválidas, se necessário
     rename_dict = {var: f"var_{var}" for var in ds_filtered.data_vars if isinstance(var, (int, float))}
