@@ -26,7 +26,7 @@ for infile in infiles:
         ds_filtered = ds_filtered.assign_coords(Time=ds['Time'])
 
     # Converter 'Times' para datetime e usar como coordenada 'Time'
-    times_str = ds['Times'].astype(str)
+    times_str = np.asarray(ds['Times']).astype(str)
 
     # Convert 'Times' to datetime with a specific format
     times_dt = pd.to_datetime([t.decode('utf-8') if isinstance(t, bytes) else t for t in ds['Times'].values], format='%Y-%m-%d_%H:%M:%S')
@@ -61,7 +61,7 @@ for infile in infiles:
         "QVAPOR": "kg/kg",  # Razão de mistura do vapor d'água
         "U": "m/s",  # Componente zonal do vento
         "V": "m/s",  # Componente meridional do vento
-        "W": "Pa/s",  # Velocidade vertical
+        "W": "hPa/s",  # Velocidade vertical
         "GPH": "m",  # Altura geopotencial
         "plevels": "hPa"  # Níveis de pressão
     }
