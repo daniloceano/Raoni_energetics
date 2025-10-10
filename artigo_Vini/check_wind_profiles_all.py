@@ -10,13 +10,13 @@ os.makedirs(output_dir, exist_ok=True)
 
 models = [
     {
-        "file": "Raoni_COWAST_processed.nc",
+        "file": "Raoni_COWAST_merged_processed.nc",
         "name": "COWAST",
         "vars": {"U": "U", "V": "V", "W": "W", "T": "T", "GPH": "GPH"},
         "coords": {"time": "Time", "pressure": "plevels"}
     },
     {
-        "file": "Raoni_WRF_processed.nc",
+        "file": "Raoni_WRF_merged_processed.nc",
         "name": "WRF",
         "vars": {"U": "U", "V": "V", "W": "W", "T": "T", "GPH": "GPH"},
         "coords": {"time": "Time", "pressure": "plevels"}
@@ -62,9 +62,6 @@ for var_plot in multiplot_vars:
             print(f"Variável {var_plot} não encontrada em {m['file']}")
             continue
         da = ds[var_ds]
-        # Corrige geopotencial do ERA5 para altura geopotencial
-        if var_plot == "GPH" and m["name"] == "ERA5":
-            da = da / 9.8
         plevels = ds[plevel_name]
         # Seleciona apenas níveis >= 100 hPa
         plevels_mask = plevels >= 100

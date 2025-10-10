@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 
 # Modelos e pastas
 modelos = [
-    ("COWAST_processed_fixed", "COWAST"),
-    ("WRF_processed_fixed", "WRF"),
+    ("COWAST_merged_processed_fixed", "COWAST"),
+    ("WRF_merged_processed_fixed", "WRF"),
     ("ERA5_fixed", "ERA5")
 ]
 
@@ -27,7 +27,7 @@ fig, axes = plt.subplots(5, 3, figsize=(15, 12), sharex=True, sharey=True)
 for col, (folder, model_name) in enumerate(modelos):
     ck_files = ck_files_by_model[col]
     for row, ck_file in enumerate(ck_files):
-        file_path = os.path.join(base_dir, f"Raoni_{folder}", "results_vertical_levels", ck_file)
+        file_path = os.path.join(base_dir, "LEC_Results", f"Raoni_{folder}", "results_vertical_levels", ck_file)
         ax = axes[row, col]
         if os.path.exists(file_path):
             df = pd.read_csv(file_path, header=0)

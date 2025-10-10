@@ -1,44 +1,39 @@
 import xarray as xr
 import numpy as np
 import pandas as pd
+import glob
 
-# Abrir o dataset
-infiles = ["Raoni_WRF.nc", "Raoni_COWAST.nc"]
-
-for infile in infiles:
-    print(f"Processando o arquivo: {infile}")
-
+# Pastas dos arquivos
+folders = ["cowast_files", "wrf_files"]
+for folder in folders:
+    file_list = sorted(glob.glob(f"{folder}/*.nc"))
+    print(f"Processando {len(file_list)} arquivos em {folder}")
+    ds = xr.open_mfdataset(file_list, combine='nested', concat_dim='Time')
     # Definir o nome do arquivo de saída
-    outfile = infile.replace(".nc", "_processed_v2.nc")
-
-    # Abrir o dataset usando xarray
-    ds = xr.open_dataset(infile)
+    fname = folder.split('_')[0].upper()  # "COWAST" ou "WRF"
+    outfile = f"Raoni_{fname}_merged_processed.nc"
 
     # Selecionar apenas as variáveis de interesse
     variables_to_keep = ["T", "QVAPOR", "U", "V", "W", "GPH", "plevels"]
     ds_filtered = ds[variables_to_keep]
-
     # Usar só de 900 hPa a 100 hPa
     ds_filtered = ds_filtered.sel(plevels=slice(100, 900))
 
     # Garantir que 'Time' seja uma coordenada indexada
-    if 'Time' not in ds_filtered.coords:
+    if 'Time' not in ds_filtered.coords and 'Time' in ds:
         ds_filtered = ds_filtered.assign_coords(Time=ds['Time'])
-
     # Converter 'Times' para datetime e usar como coordenada 'Time'
-    times_str = np.asarray(ds['Times']).astype(str)
-
-    # Convert 'Times' to datetime with a specific format
-    times_dt = pd.to_datetime([t.decode('utf-8') if isinstance(t, bytes) else t for t in ds['Times'].values], format='%Y-%m-%d_%H:%M:%S')
-
-    ds_filtered = ds_filtered.assign_coords(Time=("Time", times_dt))
-    # (Opcional) manter 'Times' como coordenada auxiliar, se desejar
-    if 'Times' not in ds_filtered.coords:
-        ds_filtered = ds_filtered.assign_coords(Times=ds['Times'])
-
-    # Remover as coordenadas 'XTIME' e 'Times'
-    del ds_filtered.coords['XTIME']
-    del ds_filtered.coords['Times']
+    if 'Times' in ds:
+        times_dt = pd.to_datetime([t.decode('utf-8') if isinstance(t, bytes) else t for t in ds['Times'].values], format='%Y-%m-%d_%H:%M:%S')
+        ds_filtered = ds_filtered.assign_coords(Time=("Time", times_dt))
+        # (Opcional) manter 'Times' como coordenada auxiliar, se desejar
+        if 'Times' not in ds_filtered.coords:
+            ds_filtered = ds_filtered.assign_coords(Times=ds['Times'])
+        # Remover as coordenadas 'XTIME' e 'Times' se existirem
+        if 'XTIME' in ds_filtered.coords:
+            del ds_filtered.coords['XTIME']
+        if 'Times' in ds_filtered.coords:
+            del ds_filtered.coords['Times']
 
     # Renomear variáveis inválidas, se necessário
     rename_dict = {var: f"var_{var}" for var in ds_filtered.data_vars if isinstance(var, (int, float))}
@@ -49,11 +44,9 @@ for infile in infiles:
     for var in ds_filtered.data_vars:
         ds_filtered[var] = ds_filtered[var].astype(np.float32)
 
-    # Dividir altura geopotencial por 9.81 para converter de m²/s² para m
-    ds_filtered['GPH'] = ds_filtered['GPH'] / 9.81
-
-    # Multiplicar W por -1
-    ds_filtered['W'] = ds_filtered['W'] * -1
+    # Inverter sinal de W
+    if 'W' in ds_filtered:
+        ds_filtered['W'] = -ds_filtered['W']
 
     # Adicionar unidades às variáveis
     units_dict = {
@@ -61,8 +54,8 @@ for infile in infiles:
         "QVAPOR": "kg/kg",  # Razão de mistura do vapor d'água
         "U": "m/s",  # Componente zonal do vento
         "V": "m/s",  # Componente meridional do vento
-        "W": "hPa/s",  # Velocidade vertical
-        "GPH": "m",  # Altura geopotencial
+        "W": "Pa/s",  # Velocidade vertical
+        "GPH": "m^2/s^2",  # Geopotencial
         "plevels": "hPa"  # Níveis de pressão
     }
 
