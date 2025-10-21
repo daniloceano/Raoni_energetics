@@ -1,0 +1,115 @@
+2025-10-21 11:07:05,053 - lorenzcycletoolkit - INFO - Starting LEC analysis
+2025-10-21 11:07:05,053 - lorenzcycletoolkit - INFO - Command line arguments: Namespace(infile='../Raoni_energetics/artigo_Vini/Raoni_WRF-ERA_merged_processed.nc', residuals=True, fixed=True, track=False, choose=False, zeta=False, mpas=False, plots=True, verbosity=True, cdsapi=False, trackfile='inputs/track', box_limits='inputs/box_limits', outname=None)
+2025-10-21 11:07:05,053 - lorenzcycletoolkit - DEBUG - Variables specified by the user in: inputs/namelist
+2025-10-21 11:07:05,053 - lorenzcycletoolkit - DEBUG - Attempting to read inputs/namelist file...
+2025-10-21 11:07:05,070 - lorenzcycletoolkit - DEBUG - List of variables found:
+                            standard_name Variable    Units
+Air Temperature           air_temperature        T        K
+Geopotential                 geopotential      GPH  m^2/s^2
+Omega Velocity                      omega        W     Pa/s
+Eastward Wind Component     eastward_wind        U      m/s
+Northward Wind Component   northward_wind        V      m/s
+Longitude                             NaN      lat      NaN
+Latitude                              NaN      lon      NaN
+Time                                  NaN     Time      NaN
+Vertical Level                        NaN  plevels      NaN
+2025-10-21 11:07:05,070 - lorenzcycletoolkit - DEBUG - Opening input data... 
+2025-10-21 11:07:07,667 - lorenzcycletoolkit - DEBUG - Ok.
+2025-10-21 11:07:07,672 - lorenzcycletoolkit - DEBUG - Assigning geospatial coordinates in radians... 
+2025-10-21 11:07:07,675 - lorenzcycletoolkit - DEBUG - Ok.
+2025-10-21 11:07:07,684 - lorenzcycletoolkit - DEBUG - Data opened successfully.
+2025-10-21 11:07:07,690 - lorenzcycletoolkit - DEBUG - Loading data into memory..
+2025-10-21 11:07:09,191 - lorenzcycletoolkit - DEBUG - Data loaded into memory.
+2025-10-21 11:07:09,200 - lorenzcycletoolkit - INFO - Bounding box: min_lon=-60.0, max_lon=-28.0, min_lat=-48.0, max_lat=-17.5
+2025-10-21 11:07:17,021 - lorenzcycletoolkit - DEBUG - Computing Az...
+2025-10-21 11:07:17,068 - lorenzcycletoolkit - DEBUG - Ok.
+2025-10-21 11:07:17,068 - lorenzcycletoolkit - DEBUG - Computing Ae...
+2025-10-21 11:07:18,250 - lorenzcycletoolkit - DEBUG - Ok.
+2025-10-21 11:07:18,255 - lorenzcycletoolkit - DEBUG - Computing Kz...
+2025-10-21 11:07:18,275 - lorenzcycletoolkit - DEBUG - Ok.
+2025-10-21 11:07:18,276 - lorenzcycletoolkit - DEBUG - Computing Ke...
+2025-10-21 11:07:21,994 - lorenzcycletoolkit - DEBUG - Ok.
+2025-10-21 11:07:21,996 - lorenzcycletoolkit - INFO - Computed energy contents
+2025-10-21 11:07:21,997 - lorenzcycletoolkit - DEBUG - Calculating CZ...
+2025-10-21 11:07:22,159 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:22,159 - lorenzcycletoolkit - DEBUG - Calculating CA...
+2025-10-21 11:07:23,686 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:23,686 - lorenzcycletoolkit - DEBUG - Calculating CK...
+2025-10-21 11:07:25,836 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:25,836 - lorenzcycletoolkit - DEBUG - Calculating CE...
+2025-10-21 11:07:26,085 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:26,091 - lorenzcycletoolkit - INFO - Computed conversion terms
+2025-10-21 11:07:26,092 - lorenzcycletoolkit - DEBUG - Calculating BAZ...
+2025-10-21 11:07:27,303 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:27,303 - lorenzcycletoolkit - DEBUG - Calculating BAE...
+2025-10-21 11:07:28,360 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:28,360 - lorenzcycletoolkit - DEBUG - Calculating BKZ...
+2025-10-21 11:07:30,254 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:30,254 - lorenzcycletoolkit - DEBUG - Calculating BKE...
+2025-10-21 11:07:31,482 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:31,482 - lorenzcycletoolkit - DEBUG - Calculating BΦZ...
+2025-10-21 11:07:31,505 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:31,505 - lorenzcycletoolkit - DEBUG - Calculating BΦE...
+2025-10-21 11:07:32,959 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:32,960 - lorenzcycletoolkit - INFO - Computed boundary terms
+2025-10-21 11:07:32,960 - lorenzcycletoolkit - DEBUG - Computing Gz...
+2025-10-21 11:07:32,982 - lorenzcycletoolkit - DEBUG - Ok.
+2025-10-21 11:07:32,982 - lorenzcycletoolkit - DEBUG - Computing Ge...
+2025-10-21 11:07:33,397 - lorenzcycletoolkit - DEBUG - Ok.
+2025-10-21 11:07:33,403 - lorenzcycletoolkit - INFO - Computed generation dissipation terms
+2025-10-21 11:07:33,407 - lorenzcycletoolkit - DEBUG - Estimating budget values using finite differences...
+2025-10-21 11:07:33,408 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:33,408 - lorenzcycletoolkit - DEBUG - Estimating residuals...
+2025-10-21 11:07:33,410 - lorenzcycletoolkit - DEBUG - Done.
+2025-10-21 11:07:33,410 - lorenzcycletoolkit - INFO - Computed budget and residuals
+2025-10-21 11:07:33,415 - lorenzcycletoolkit - INFO - Results saved to LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Raoni_WRF-ERA_merged_processed_fixed_results.csv
+2025-10-21 11:07:33,424 - lorenzcycletoolkit - INFO - Generating plots..
+2025-10-21 11:07:33,424 - lorenzcycletoolkit - INFO - Plotting timeseries...
+2025-10-21 11:07:35,842 - lorenzcycletoolkit - INFO - Figure saved for energy in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/timeseries
+2025-10-21 11:07:35,976 - lorenzcycletoolkit - INFO - Figure saved for conversion in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/timeseries
+2025-10-21 11:07:36,098 - lorenzcycletoolkit - INFO - Figure saved for boundary in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/timeseries
+2025-10-21 11:07:36,241 - lorenzcycletoolkit - INFO - Figure saved for budget_diff in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/timeseries
+2025-10-21 11:07:36,361 - lorenzcycletoolkit - INFO - Figure saved for residuals in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/timeseries
+2025-10-21 11:07:36,480 - lorenzcycletoolkit - INFO - Figure saved for generation_dissipation in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/timeseries
+2025-10-21 11:07:36,604 - lorenzcycletoolkit - INFO - Figure saved for comparing_generation in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/timeseries
+2025-10-21 11:07:36,719 - lorenzcycletoolkit - INFO - Figure saved for comparing_dissipation in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/timeseries
+2025-10-21 11:07:36,719 - lorenzcycletoolkit - INFO - Successfully generated time series plot.
+2025-10-21 11:07:36,719 - lorenzcycletoolkit - INFO - Plotting box limits on map...
+2025-10-21 11:07:37,495 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures
+2025-10-21 11:07:37,495 - lorenzcycletoolkit - INFO - Successfully generated box limits plot.
+2025-10-21 11:07:37,495 - lorenzcycletoolkit - INFO - Plotting boxplots...
+2025-10-21 11:07:37,525 - lorenzcycletoolkit - INFO - Creating boxplot for each time
+2025-10-21 11:07:40,363 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/boxplots
+2025-10-21 11:07:43,536 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/boxplots
+2025-10-21 11:07:45,371 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/boxplots
+2025-10-21 11:07:45,371 - lorenzcycletoolkit - INFO - Creating boxplot for each vertical level
+2025-10-21 11:07:45,937 - lorenzcycletoolkit - INFO - Created ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/boxplots/boxplot_vertical_levels_energy.png
+2025-10-21 11:07:46,622 - lorenzcycletoolkit - INFO - Created ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/boxplots/boxplot_vertical_levels_conversion.png
+2025-10-21 11:07:47,031 - lorenzcycletoolkit - INFO - Created ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/boxplots/boxplot_vertical_levels_generation_dissipation.png
+2025-10-21 11:07:47,032 - lorenzcycletoolkit - INFO - Creating boxplot for each term
+2025-10-21 11:07:47,123 - lorenzcycletoolkit - INFO - boxplot_terms_energy.png created
+2025-10-21 11:07:47,219 - lorenzcycletoolkit - INFO - boxplot_terms_conversion.png created
+2025-10-21 11:07:47,312 - lorenzcycletoolkit - INFO - boxplot_terms_boundary.png created
+2025-10-21 11:07:47,406 - lorenzcycletoolkit - INFO - boxplot_terms_budget_diff.png created
+2025-10-21 11:07:47,496 - lorenzcycletoolkit - INFO - boxplot_terms_residuals.png created
+2025-10-21 11:07:47,564 - lorenzcycletoolkit - INFO - boxplot_terms_generation_dissipation.png created
+2025-10-21 11:07:47,651 - lorenzcycletoolkit - INFO - boxplot_terms_comparing_generation.png created
+2025-10-21 11:07:47,724 - lorenzcycletoolkit - INFO - boxplot_terms_comparing_dissipation.png created
+2025-10-21 11:07:47,725 - lorenzcycletoolkit - INFO - Successfully generated boxplot terms.
+2025-10-21 11:07:47,749 - lorenzcycletoolkit - INFO - Creating hovmoller diagrams
+2025-10-21 11:07:48,646 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/hovmollers/hovmoller_energy.png
+2025-10-21 11:07:49,357 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/hovmollers/hovmoller_conversion.png
+2025-10-21 11:07:49,755 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/hovmollers/hovmoller_generation_dissipation.png
+2025-10-21 11:07:49,755 - lorenzcycletoolkit - INFO - Hovmoller diagrams created
+2025-10-21 11:07:49,755 - lorenzcycletoolkit - INFO - Successfully generated Hovmöller plot.
+2025-10-21 11:07:49,863 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/LEC/LEC_example.png
+2025-10-21 11:07:49,965 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/LEC/LEC_2021-06-25.png
+2025-10-21 11:07:50,056 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/LEC/LEC_2021-06-26.png
+2025-10-21 11:07:50,146 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/LEC/LEC_2021-06-27.png
+2025-10-21 11:07:50,237 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/LEC/LEC_2021-06-28.png
+2025-10-21 11:07:50,329 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/LEC/LEC_2021-06-29.png
+2025-10-21 11:07:50,423 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/LEC/LEC_2021-06-30.png
+2025-10-21 11:07:50,514 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/LEC/LEC_2021-07-01.png
+2025-10-21 11:07:50,604 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/Raoni_WRF-ERA_merged_processed_fixed/Figures/LEC/LEC_2021-07-02.png
+2025-10-21 11:07:50,605 - lorenzcycletoolkit - INFO - Successfully generated Lorenz cycle plot.
+2025-10-21 11:07:50,605 - lorenzcycletoolkit - INFO - --- 42.91624188423157 seconds running fixed framework ---

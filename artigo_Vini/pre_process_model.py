@@ -4,7 +4,8 @@ import pandas as pd
 import glob
 
 # Pastas dos arquivos
-folders = ["cowast_files", "wrf_files"]
+#folders = ["cowast_files", "wrf_files"]
+folders = ['wrf-era_files']
 for folder in folders:
     file_list = sorted(glob.glob(f"{folder}/*.nc"))
     print(f"Processando {len(file_list)} arquivos em {folder}")
