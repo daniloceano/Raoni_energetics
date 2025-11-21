@@ -1,0 +1,116 @@
+2025-11-19 23:59:00,355 - lorenzcycletoolkit - INFO - Starting LEC analysis
+2025-11-19 23:59:00,355 - lorenzcycletoolkit - INFO - Command line arguments: Namespace(infile='../Raoni_energetics/artigo_Vini/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed.nc', residuals=True, fixed=True, track=False, choose=False, zeta=False, mpas=False, plots=True, verbosity=True, cdsapi=False, trackfile='inputs/track', box_limits='inputs/box_limits', outname=None)
+2025-11-19 23:59:00,355 - lorenzcycletoolkit - DEBUG - Variables specified by the user in: inputs/namelist
+2025-11-19 23:59:00,355 - lorenzcycletoolkit - DEBUG - Attempting to read inputs/namelist file...
+2025-11-19 23:59:00,357 - lorenzcycletoolkit - DEBUG - List of variables found:
+                           Variable          Units
+standard_name                                     
+Air Temperature                  TT              K
+Eastward Wind Component          UU            m/s
+Northward Wind Component         VV            m/s
+Omega Velocity                    W           Pa/s
+Geopotential Height             GHT              m
+Longitude                 longitude   degrees_east
+Latitude                   latitude  degrees_north
+Time                           time     datetime64
+Vertical Level              plevels            hPa
+2025-11-19 23:59:00,357 - lorenzcycletoolkit - DEBUG - Opening input data... 
+2025-11-19 23:59:00,623 - lorenzcycletoolkit - DEBUG - Ok.
+2025-11-19 23:59:00,625 - lorenzcycletoolkit - DEBUG - Assigning geospatial coordinates in radians... 
+2025-11-19 23:59:00,626 - lorenzcycletoolkit - DEBUG - Ok.
+2025-11-19 23:59:00,631 - lorenzcycletoolkit - DEBUG - Data opened successfully.
+2025-11-19 23:59:00,633 - lorenzcycletoolkit - DEBUG - Loading data into memory..
+2025-11-19 23:59:01,893 - lorenzcycletoolkit - DEBUG - Data loaded into memory.
+2025-11-19 23:59:01,893 - lorenzcycletoolkit - INFO - Bounding box: min_lon=-60.0, max_lon=-28.0, min_lat=-48.0, max_lat=-17.5
+2025-11-19 23:59:06,524 - lorenzcycletoolkit - DEBUG - Computing Az...
+2025-11-19 23:59:06,536 - lorenzcycletoolkit - DEBUG - Ok.
+2025-11-19 23:59:06,536 - lorenzcycletoolkit - DEBUG - Computing Ae...
+2025-11-19 23:59:06,746 - lorenzcycletoolkit - DEBUG - Ok.
+2025-11-19 23:59:06,750 - lorenzcycletoolkit - DEBUG - Computing Kz...
+2025-11-19 23:59:06,755 - lorenzcycletoolkit - DEBUG - Ok.
+2025-11-19 23:59:06,755 - lorenzcycletoolkit - DEBUG - Computing Ke...
+2025-11-19 23:59:07,156 - lorenzcycletoolkit - DEBUG - Ok.
+2025-11-19 23:59:07,156 - lorenzcycletoolkit - INFO - Computed energy contents
+2025-11-19 23:59:07,157 - lorenzcycletoolkit - DEBUG - Calculating CZ...
+2025-11-19 23:59:07,163 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:07,163 - lorenzcycletoolkit - DEBUG - Calculating CA...
+2025-11-19 23:59:07,742 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:07,742 - lorenzcycletoolkit - DEBUG - Calculating CK...
+2025-11-19 23:59:09,117 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:09,117 - lorenzcycletoolkit - DEBUG - Calculating CE...
+2025-11-19 23:59:09,294 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:09,298 - lorenzcycletoolkit - INFO - Computed conversion terms
+2025-11-19 23:59:09,299 - lorenzcycletoolkit - DEBUG - Calculating BAZ...
+2025-11-19 23:59:10,020 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:10,020 - lorenzcycletoolkit - DEBUG - Calculating BAE...
+2025-11-19 23:59:10,673 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:10,673 - lorenzcycletoolkit - DEBUG - Calculating BKZ...
+2025-11-19 23:59:12,064 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:12,064 - lorenzcycletoolkit - DEBUG - Calculating BKE...
+2025-11-19 23:59:13,229 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:13,229 - lorenzcycletoolkit - DEBUG - Calculating BΦZ...
+2025-11-19 23:59:13,236 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:13,236 - lorenzcycletoolkit - DEBUG - Calculating BΦE...
+2025-11-19 23:59:13,624 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:13,624 - lorenzcycletoolkit - INFO - Computed boundary terms
+2025-11-19 23:59:13,624 - lorenzcycletoolkit - DEBUG - Computing Gz...
+2025-11-19 23:59:13,629 - lorenzcycletoolkit - DEBUG - Ok.
+2025-11-19 23:59:13,630 - lorenzcycletoolkit - DEBUG - Computing Ge...
+2025-11-19 23:59:13,921 - lorenzcycletoolkit - DEBUG - Ok.
+2025-11-19 23:59:13,927 - lorenzcycletoolkit - INFO - Computed generation dissipation terms
+2025-11-19 23:59:13,928 - lorenzcycletoolkit - DEBUG - Estimating budget values using finite differences...
+2025-11-19 23:59:13,928 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:13,928 - lorenzcycletoolkit - DEBUG - Estimating residuals...
+2025-11-19 23:59:13,929 - lorenzcycletoolkit - DEBUG - Done.
+2025-11-19 23:59:13,929 - lorenzcycletoolkit - INFO - Computed budget and residuals
+2025-11-19 23:59:13,930 - lorenzcycletoolkit - INFO - Results saved to LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed_results.csv
+2025-11-19 23:59:13,932 - lorenzcycletoolkit - INFO - Generating plots..
+2025-11-19 23:59:13,932 - lorenzcycletoolkit - INFO - Plotting timeseries...
+2025-11-19 23:59:14,084 - lorenzcycletoolkit - INFO - Figure saved for energy in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/timeseries
+2025-11-19 23:59:14,147 - lorenzcycletoolkit - INFO - Figure saved for conversion in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/timeseries
+2025-11-19 23:59:14,212 - lorenzcycletoolkit - INFO - Figure saved for boundary in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/timeseries
+2025-11-19 23:59:14,279 - lorenzcycletoolkit - INFO - Figure saved for budget_diff in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/timeseries
+2025-11-19 23:59:14,343 - lorenzcycletoolkit - INFO - Figure saved for residuals in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/timeseries
+2025-11-19 23:59:14,442 - lorenzcycletoolkit - INFO - Figure saved for generation_dissipation in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/timeseries
+2025-11-19 23:59:14,504 - lorenzcycletoolkit - INFO - Figure saved for comparing_generation in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/timeseries
+2025-11-19 23:59:14,563 - lorenzcycletoolkit - INFO - Figure saved for comparing_dissipation in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/timeseries
+2025-11-19 23:59:14,563 - lorenzcycletoolkit - INFO - Successfully generated time series plot.
+2025-11-19 23:59:14,563 - lorenzcycletoolkit - INFO - Plotting box limits on map...
+2025-11-19 23:59:14,807 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures
+2025-11-19 23:59:14,807 - lorenzcycletoolkit - INFO - Successfully generated box limits plot.
+2025-11-19 23:59:14,807 - lorenzcycletoolkit - INFO - Plotting boxplots...
+2025-11-19 23:59:14,813 - lorenzcycletoolkit - INFO - Creating boxplot for each time
+2025-11-19 23:59:15,097 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/boxplots
+2025-11-19 23:59:15,361 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/boxplots
+2025-11-19 23:59:15,544 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/boxplots
+2025-11-19 23:59:15,544 - lorenzcycletoolkit - INFO - Creating boxplot for each vertical level
+2025-11-19 23:59:15,758 - lorenzcycletoolkit - INFO - Created ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/boxplots/boxplot_vertical_levels_energy.png
+2025-11-19 23:59:16,010 - lorenzcycletoolkit - INFO - Created ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/boxplots/boxplot_vertical_levels_conversion.png
+2025-11-19 23:59:16,131 - lorenzcycletoolkit - INFO - Created ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/boxplots/boxplot_vertical_levels_generation_dissipation.png
+2025-11-19 23:59:16,131 - lorenzcycletoolkit - INFO - Creating boxplot for each term
+2025-11-19 23:59:16,184 - lorenzcycletoolkit - INFO - boxplot_terms_energy.png created
+2025-11-19 23:59:16,235 - lorenzcycletoolkit - INFO - boxplot_terms_conversion.png created
+2025-11-19 23:59:16,287 - lorenzcycletoolkit - INFO - boxplot_terms_boundary.png created
+2025-11-19 23:59:16,341 - lorenzcycletoolkit - INFO - boxplot_terms_budget_diff.png created
+2025-11-19 23:59:16,390 - lorenzcycletoolkit - INFO - boxplot_terms_residuals.png created
+2025-11-19 23:59:16,427 - lorenzcycletoolkit - INFO - boxplot_terms_generation_dissipation.png created
+2025-11-19 23:59:16,510 - lorenzcycletoolkit - INFO - boxplot_terms_comparing_generation.png created
+2025-11-19 23:59:16,550 - lorenzcycletoolkit - INFO - boxplot_terms_comparing_dissipation.png created
+2025-11-19 23:59:16,550 - lorenzcycletoolkit - INFO - Successfully generated boxplot terms.
+2025-11-19 23:59:16,556 - lorenzcycletoolkit - INFO - Creating hovmoller diagrams
+2025-11-19 23:59:16,755 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/hovmollers/hovmoller_energy.png
+2025-11-19 23:59:17,082 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/hovmollers/hovmoller_conversion.png
+2025-11-19 23:59:17,228 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/hovmollers/hovmoller_generation_dissipation.png
+2025-11-19 23:59:17,228 - lorenzcycletoolkit - INFO - Hovmoller diagrams created
+2025-11-19 23:59:17,228 - lorenzcycletoolkit - INFO - Successfully generated Hovmöller plot.
+2025-11-19 23:59:17,282 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/LEC/LEC_example.png
+2025-11-19 23:59:17,334 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/LEC/LEC_2021-06-25.png
+2025-11-19 23:59:17,383 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/LEC/LEC_2021-06-26.png
+2025-11-19 23:59:17,432 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/LEC/LEC_2021-06-27.png
+2025-11-19 23:59:17,481 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/LEC/LEC_2021-06-28.png
+2025-11-19 23:59:17,530 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/LEC/LEC_2021-06-29.png
+2025-11-19 23:59:17,580 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/LEC/LEC_2021-06-30.png
+2025-11-19 23:59:17,628 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/LEC/LEC_2021-07-01.png
+2025-11-19 23:59:17,676 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed/Figures/LEC/LEC_2021-07-02.png
+2025-11-19 23:59:17,676 - lorenzcycletoolkit - INFO - Successfully generated Lorenz cycle plot.
+2025-11-19 23:59:17,676 - lorenzcycletoolkit - INFO - --- 17.043575048446655 seconds running fixed framework ---
