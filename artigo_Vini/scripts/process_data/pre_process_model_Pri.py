@@ -9,7 +9,7 @@ processado pronto para utilizar nos cálculos de energética. O processamento in
 - Filtragem de níveis verticais
 - Conversão de geopotencial para altura geopotencial (quando aplicável)
 
-Autor: [Seu nome]
+Autor: Danilo
 Data: 2025
 """
 
