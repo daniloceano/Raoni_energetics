@@ -34,16 +34,26 @@ CONFIG = {
     "base_results_dir": "../../LEC_Results",
     "base_output_dir": "../../Figures",
     
-    # Data sources to process
+    # Data sources to process (including GFS)
     "data_sources": [
         "Raoni_ERA5_fixed",
+        "GFS_Raoni_processed_fixed",
         "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed",
         "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed"
     ],
     
+    # Display names for figures (CPL_EXP = coupled, DPC_EXP = uncoupled/decoupled)
+    "display_names": {
+        "Raoni_ERA5_fixed": "ERA5",
+        "GFS_Raoni_processed_fixed": "GFS",
+        "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed": "CPL_EXP",
+        "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed": "DPC_EXP"
+    },
+    
     # Optional periods file for each source
     "periods_files": {
         "Raoni_ERA5_fixed": None,
+        "GFS_Raoni_processed_fixed": None,
         "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed": None,
         "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed": None
     },
@@ -259,7 +269,10 @@ def create_timeseries_plot(data: pd.DataFrame, terms: List[str], title: str,
         # Configure axes
         ax.set_ylabel(ylabel, fontsize=CONFIG["label_fontsize"], fontweight='bold')
         ax.set_xlabel('Time', fontsize=CONFIG["label_fontsize"], fontweight='bold')
-        full_title = f"{title} - {source_name}" if source_name else title
+        
+        # Use display name for title
+        display_name = CONFIG["display_names"].get(source_name, source_name)
+        full_title = f"{title} - {display_name}" if source_name else title
         ax.set_title(full_title, fontsize=CONFIG["title_fontsize"], 
                     fontweight='bold', pad=20)
         

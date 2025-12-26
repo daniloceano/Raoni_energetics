@@ -7,8 +7,10 @@ Hovmöller Diagram Generator for Individual Cyclone Energy Analysis
 This script generates Hovmöller diagrams (time-pressure plots) for energy terms
 from cyclone analysis data for each data source individually.
 
-Author: Automated Script
-Date: 2024
+Style: Publication-ready for Scientific Reports
+
+Author: Danilo
+Date: 2025
 """
 
 import os
@@ -24,6 +26,40 @@ from matplotlib.colors import TwoSlopeNorm, LinearSegmentedColormap
 from datetime import datetime
 
 # ============================================================================
+# SCIENTIFIC REPORTS STYLE
+# ============================================================================
+
+plt.style.use('seaborn-v0_8-whitegrid')
+
+plt.rcParams.update({
+    # Font settings (Scientific Reports uses sans-serif)
+    'font.family': 'sans-serif',
+    'font.sans-serif': ['Arial', 'Helvetica', 'DejaVu Sans'],
+    'font.size': 9,
+    
+    # Axes
+    'axes.labelsize': 11,
+    'axes.titlesize': 12,
+    'axes.titleweight': 'bold',
+    'axes.linewidth': 0.8,
+    'axes.labelweight': 'normal',
+    
+    # Ticks
+    'xtick.labelsize': 9,
+    'ytick.labelsize': 9,
+    'xtick.major.width': 0.8,
+    'ytick.major.width': 0.8,
+    'xtick.major.size': 4,
+    'ytick.major.size': 4,
+    
+    # Figure
+    'figure.dpi': 150,
+    'savefig.dpi': 300,
+    'savefig.bbox': 'tight',
+    'savefig.pad_inches': 0.1,
+})
+
+# ============================================================================
 # CONFIGURATION SECTION - Easily customizable parameters
 # ============================================================================
 
@@ -32,16 +68,26 @@ CONFIG = {
     "base_results_dir": "../../LEC_Results",
     "base_output_dir": "../../Figures",
     
-    # Data sources to process
+    # Data sources to process (including GFS)
     "data_sources": [
         "Raoni_ERA5_fixed",
+        "GFS_Raoni_processed_fixed",
         "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed",
         "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed"
     ],
     
+    # Display names for figures (CPL_EXP = coupled, DPC_EXP = uncoupled/decoupled)
+    "display_names": {
+        "Raoni_ERA5_fixed": "ERA5",
+        "GFS_Raoni_processed_fixed": "GFS",
+        "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed": "CPL_EXP",
+        "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed": "DPC_EXP"
+    },
+    
     # Optional periods file for each source (set to None if not available)
     "periods_files": {
         "Raoni_ERA5_fixed": None,
+        "GFS_Raoni_processed_fixed": None,
         "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed": None,
         "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed": None
     },
@@ -55,13 +101,13 @@ CONFIG = {
     "sequential_cmap": "YlOrRd",  # For energy terms (progressive)
     "divergent_cmap": "RdBu_r",   # For conversion/generation terms
     
-    # Plot styling
-    "figure_size": (14, 8),
+    # Plot styling (Scientific Reports)
+    "figure_size": (180/25.4, 120/25.4),  # 180mm x 120mm
     "dpi": 300,
-    "title_fontsize": 16,
-    "label_fontsize": 14,
-    "tick_fontsize": 12,
-    "phase_fontsize": 11,
+    "title_fontsize": 12,
+    "label_fontsize": 11,
+    "tick_fontsize": 9,
+    "phase_fontsize": 9,
     "phase_fontweight": "bold",
     
     # Phase colors and labels
@@ -309,16 +355,19 @@ def create_hovmoller(
         
         # Add colorbar
         cbar = plt.colorbar(contourf, ax=ax, pad=0.02)
-        cbar.set_label(f'{term} [J/m²]', fontsize=CONFIG["label_fontsize"])
+        cbar.set_label(r'{} [J$\cdot$m$^{{-2}}$]'.format(term), fontsize=CONFIG["label_fontsize"])
         cbar.ax.tick_params(labelsize=CONFIG["tick_fontsize"])
         
         # Add phase markers if available
         add_phase_markers(ax, periods_df, data)
         
+        # Get display name for title
+        display_name = CONFIG["display_names"].get(source_name, source_name)
+        
         # Labels and title
-        ax.set_xlabel('Time', fontsize=CONFIG["label_fontsize"])
-        ax.set_ylabel('Pressure Level [hPa]', fontsize=CONFIG["label_fontsize"])
-        ax.set_title(f'{term} Hovmöller Diagram - {source_name}',
+        ax.set_xlabel('Date (2021)', fontsize=CONFIG["label_fontsize"])
+        ax.set_ylabel('Pressure Level (hPa)', fontsize=CONFIG["label_fontsize"])
+        ax.set_title(f'{term} Hovmöller Diagram - {display_name}',
                     fontsize=CONFIG["title_fontsize"], fontweight='bold')
         
         # Adjust tick parameters
@@ -328,19 +377,25 @@ def create_hovmoller(
         ax.set_ylim(max(pressure_levels), min(pressure_levels))
         
         # Format x-axis (time)
-        ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
-        ax.xaxis.set_major_locator(mdates.HourLocator(interval=12))
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d'))
+        ax.xaxis.set_major_locator(mdates.DayLocator(interval=1))
+        ax.xaxis.set_minor_locator(mdates.HourLocator(interval=12))
         plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, ha='right')
         
         # Add grid
-        ax.grid(True, alpha=0.3, linestyle=':', linewidth=0.5)
+        ax.grid(True, alpha=0.3, linestyle='-', linewidth=0.5)
         
         # Adjust layout and save
         plt.tight_layout()
-        plt.savefig(output_path, dpi=CONFIG["dpi"], bbox_inches='tight')
+        plt.savefig(output_path, dpi=CONFIG["dpi"], bbox_inches='tight', facecolor='white')
+        
+        # Also save as PDF
+        pdf_path = Path(output_path).with_suffix('.pdf')
+        plt.savefig(pdf_path, format='pdf', bbox_inches='tight', facecolor='white')
+        
         plt.close()
         
-        logger.info(f"      ✅ Saved: {Path(output_path).name}")
+        logger.info(f"      ✅ Saved: {Path(output_path).name} (+ PDF)")
         return True
         
     except Exception as e:

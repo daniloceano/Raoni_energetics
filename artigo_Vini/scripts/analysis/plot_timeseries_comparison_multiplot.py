@@ -108,18 +108,18 @@ CONFIG = {
             "marker": "s",
             "zorder": 3,
         },
-        "WRF_coupled": {
+        "CPL_EXP": {
             "path": "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed",
-            "label": "WRF Coupled",
-            "color": "#3498db",      # Blue
+            "label": "CPL_EXP",
+            "color": "#e74c3c",      # Red (coupled)
             "linestyle": "-",
             "marker": "^",
             "zorder": 2,
         },
-        "WRF_uncoupled": {
+        "DPC_EXP": {
             "path": "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed",
-            "label": "WRF Uncoupled",
-            "color": "#e74c3c",      # Red
+            "label": "DPC_EXP",
+            "color": "#3498db",      # Blue (uncoupled)
             "linestyle": "--",
             "marker": "v",
             "zorder": 1,
@@ -419,9 +419,14 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
             handles.append(handle)
             labels.append(source_info["label"])
         
+        if 'Generation' in fig_config['title']:
+            bbox_to_anchor = (0.5, -0.15)
+        else:
+            bbox_to_anchor = (0.5, -0.02)
+
         fig.legend(handles, labels, 
                   loc='lower center',
-                  bbox_to_anchor=(0.5, -0.02),
+                  bbox_to_anchor=bbox_to_anchor,
                   ncol=len(all_data),
                   frameon=True,
                   fontsize=9)
