@@ -73,15 +73,21 @@ CONFIG = {
         "Raoni_ERA5_fixed",
         "GFS_Raoni_processed_fixed",
         "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed",
-        "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed"
+        "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed",
+        "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed",
+        "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed"
     ],
     
-    # Display names for figures (CPL_EXP = coupled, DPC_EXP = uncoupled/decoupled)
+    # Display names for figures
+    # GFS_CPL_EXP = GFS coupled, GFS_DCP_EXP = GFS decoupled
+    # ERA5_CPL_EXP = ERA5 coupled, ERA5_DCP_EXP = ERA5 decoupled
     "display_names": {
         "Raoni_ERA5_fixed": "ERA5",
         "GFS_Raoni_processed_fixed": "GFS",
-        "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed": "CPL_EXP",
-        "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed": "DPC_EXP"
+        "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed": "GFS_CPL_EXP",
+        "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed": "GFS_DCP_EXP",
+        "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed": "ERA5_CPL_EXP",
+        "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed": "ERA5_DCP_EXP"
     },
     
     # Optional periods file for each source (set to None if not available)
@@ -89,7 +95,9 @@ CONFIG = {
         "Raoni_ERA5_fixed": None,
         "GFS_Raoni_processed_fixed": None,
         "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed": None,
-        "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed": None
+        "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed": None,
+        "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed": None,
+        "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed": None
     },
     
     # Energy terms to plot (will be automatically detected from files)

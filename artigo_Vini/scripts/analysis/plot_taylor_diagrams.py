@@ -88,17 +88,29 @@ CONFIG = {
             "color": "#27ae60",      # Green
             "marker": "s",           # Square
         },
-        "CPL_EXP": {
+        "GFS_CPL_EXP": {
             "path": "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed",
-            "label": "CPL_EXP",
-            "color": "#e74c3c",      # Red (coupled)
+            "label": "GFS_CPL_EXP",
+            "color": "#e74c3c",      # Red (GFS coupled)
             "marker": "^",           # Triangle up
         },
-        "DPC_EXP": {
+        "GFS_DCP_EXP": {
             "path": "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed",
-            "label": "DPC_EXP",
-            "color": "#3498db",      # Blue (uncoupled/decoupled)
+            "label": "GFS_DCP_EXP",
+            "color": "#3498db",      # Blue (GFS decoupled)
             "marker": "v",           # Triangle down
+        },
+        "ERA5_CPL_EXP": {
+            "path": "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed",
+            "label": "ERA5_CPL_EXP",
+            "color": "#9b59b6",      # Purple (ERA5 coupled)
+            "marker": "D",           # Diamond
+        },
+        "ERA5_DCP_EXP": {
+            "path": "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed",
+            "label": "ERA5_DCP_EXP",
+            "color": "#f39c12",      # Orange (ERA5 decoupled)
+            "marker": "p",           # Pentagon
         }
     },
     

@@ -98,7 +98,7 @@ CONFIG = {
             "color": "#2c3e50",      # Dark blue-gray
             "linestyle": "-",
             "marker": "o",
-            "zorder": 4,
+            "zorder": 6,
         },
         "GFS": {
             "path": "GFS_Raoni_processed_fixed",
@@ -106,22 +106,38 @@ CONFIG = {
             "color": "#27ae60",      # Green
             "linestyle": "-",
             "marker": "s",
-            "zorder": 3,
+            "zorder": 5,
         },
-        "CPL_EXP": {
+        "GFS_CPL_EXP": {
             "path": "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed",
-            "label": "CPL_EXP",
-            "color": "#e74c3c",      # Red (coupled)
+            "label": "GFS_CPL_EXP",
+            "color": "#e74c3c",      # Red (GFS coupled)
             "linestyle": "-",
             "marker": "^",
-            "zorder": 2,
+            "zorder": 4,
         },
-        "DPC_EXP": {
+        "GFS_DCP_EXP": {
             "path": "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed",
-            "label": "DPC_EXP",
-            "color": "#3498db",      # Blue (uncoupled)
+            "label": "GFS_DCP_EXP",
+            "color": "#3498db",      # Blue (GFS decoupled)
             "linestyle": "--",
             "marker": "v",
+            "zorder": 3,
+        },
+        "ERA5_CPL_EXP": {
+            "path": "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed",
+            "label": "ERA5_CPL_EXP",
+            "color": "#9b59b6",      # Purple (ERA5 coupled)
+            "linestyle": "-",
+            "marker": "D",
+            "zorder": 2,
+        },
+        "ERA5_DCP_EXP": {
+            "path": "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed",
+            "label": "ERA5_DCP_EXP",
+            "color": "#f39c12",      # Orange (ERA5 decoupled)
+            "linestyle": "--",
+            "marker": "p",
             "zorder": 1,
         }
     },

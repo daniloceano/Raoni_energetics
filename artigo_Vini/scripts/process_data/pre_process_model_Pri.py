@@ -24,7 +24,7 @@ import sys
 # ============================================================================
 
 # Arquivos de entrada e saída
-INFILE = 'WRF-cacoplamento_Raoni-6h_INTRP_Regular.nc'
+INFILE = 'data/WRFsa-ERA5-RAONI-6h_INTRP-Regular.nc'
 OUTFILE = f"{INFILE.replace('.nc', '_processed.nc')}"
 
 # Variáveis a manter no arquivo (lista)

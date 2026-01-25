@@ -44,7 +44,9 @@ CONFIG = {
         "Raoni_ERA5_fixed",
         "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed",
         "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed",
-        "GFS_Raoni_processed_fixed"
+        "GFS_Raoni_processed_fixed",
+        "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed",
+        "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed"
     ],
     
     # Optional periods file for each source
@@ -52,7 +54,9 @@ CONFIG = {
         "Raoni_ERA5_fixed": None,
         "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed": None,
         "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed": None,
-        "GFS_Raoni_processed_fixed": None
+        "GFS_Raoni_processed_fixed": None,
+        "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed": None,
+        "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed": None
     },
     
     # Terms to plot
