@@ -34,147 +34,23 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 from matplotlib.lines import Line2D
 
-# ============================================================================
-# SCIENTIFIC REPORTS STYLE CONFIGURATION
-# ============================================================================
+# Import configuration
+from config import (
+    DATA_SOURCES,
+    BASE_RESULTS_DIR,
+    BASE_OUTPUT_DIR,
+    REFERENCE_SOURCE,
+    MODEL_SOURCES,
+    RESAMPLE_ERA5,
+    RESAMPLE_GFS,
+    RESAMPLE_FREQ,
+    FIGURE_TYPES,
+    apply_scientific_reports_style,
+    get_output_path
+)
 
-plt.style.use('seaborn-v0_8-whitegrid')
-
-plt.rcParams.update({
-    'font.family': 'sans-serif',
-    'font.sans-serif': ['Arial', 'Helvetica', 'DejaVu Sans'],
-    'font.size': 9,
-    'axes.labelsize': 10,
-    'axes.titlesize': 11,
-    'axes.titleweight': 'bold',
-    'axes.linewidth': 0.8,
-    'axes.labelweight': 'normal',
-    'xtick.labelsize': 8,
-    'ytick.labelsize': 8,
-    'xtick.major.width': 0.8,
-    'ytick.major.width': 0.8,
-    'xtick.major.size': 4,
-    'ytick.major.size': 4,
-    'legend.fontsize': 8,
-    'legend.frameon': True,
-    'legend.framealpha': 0.9,
-    'legend.edgecolor': '0.8',
-    'figure.dpi': 150,
-    'savefig.dpi': 300,
-    'savefig.bbox': 'tight',
-    'savefig.pad_inches': 0.1,
-})
-
-# ============================================================================
-# CONFIGURATION
-# ============================================================================
-
-CONFIG = {
-    # Base directories
-    "base_results_dir": "../../LEC_Results",
-    "base_output_dir": "../../Figures/Comparisons/taylor_diagrams",
-    
-    # Reference data source (ERA5)
-    "reference_source": {
-        "path": "Raoni_ERA5_fixed",
-        "label": "ERA5",
-    },
-    
-    # Model data sources to compare
-    "model_sources": {
-        "GFS": {
-            "path": "GFS_Raoni_processed_fixed",
-            "label": "GFS",
-            "color": "#27ae60",      # Green
-            "marker": "s",           # Square
-        },
-        "GFS_CPL_EXP": {
-            "path": "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed",
-            "label": "GFS_CPL_EXP",
-            "color": "#e74c3c",      # Red (GFS coupled)
-            "marker": "^",           # Triangle up
-        },
-        "GFS_DCP_EXP": {
-            "path": "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed",
-            "label": "GFS_DCP_EXP",
-            "color": "#3498db",      # Blue (GFS decoupled)
-            "marker": "v",           # Triangle down
-        },
-        "ERA5_CPL_EXP": {
-            "path": "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed",
-            "label": "ERA5_CPL_EXP",
-            "color": "#9b59b6",      # Purple (ERA5 coupled)
-            "marker": "D",           # Diamond
-        },
-        "ERA5_DCP_EXP": {
-            "path": "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed",
-            "label": "ERA5_DCP_EXP",
-            "color": "#f39c12",      # Orange (ERA5 decoupled)
-            "marker": "p",           # Pentagon
-        }
-    },
-    
-    # Resampling configuration (match WRF 6h frequency)
-    "resample_era5": True,
-    "resample_gfs": True,
-    "resample_freq": "6h",
-    
-    # Terms organized by figure type
-    "figures": {
-        "energy": {
-            "title": "Energy Reservoirs",
-            "terms": ["Az", "Ae", "Kz", "Ke"],
-            "term_labels": {
-                "Az": r"$A_Z$",
-                "Ae": r"$A_E$",
-                "Kz": r"$K_Z$",
-                "Ke": r"$K_E$"
-            },
-        },
-        "conversion": {
-            "title": "Energy Conversion Terms",
-            "terms": ["Ca", "Ce", "Ck", "Cz"],
-            "term_labels": {
-                "Ca": r"$C_A$",
-                "Ce": r"$C_E$",
-                "Ck": r"$C_K$",
-                "Cz": r"$C_Z$"
-            },
-        },
-        "generation": {
-            "title": "Generation Terms",
-            "terms": ["Ge", "Gz"],
-            "term_labels": {
-                "Ge": r"$G_E$",
-                "Gz": r"$G_Z$"
-            },
-        },
-        "boundary": {
-            "title": "Boundary Flux Terms",
-            "terms": ["BAz", "BAe", "BKz", "BKe"],
-            "term_labels": {
-                "BAz": r"$B_{A_Z}$",
-                "BAe": r"$B_{A_E}$",
-                "BKz": r"$B_{K_Z}$",
-                "BKe": r"$B_{K_E}$"
-            },
-        },
-        "all_combined": {
-            "title": "All Terms Combined",
-            "terms": ["Az", "Ae", "Kz", "Ke", "Ca", "Ce", "Ck", "Cz", "Ge", "Gz", "BAz", "BAe", "BKz", "BKe"],
-            "term_labels": {
-                "Az": r"$A_Z$", "Ae": r"$A_E$", "Kz": r"$K_Z$", "Ke": r"$K_E$",
-                "Ca": r"$C_A$", "Ce": r"$C_E$", "Ck": r"$C_K$", "Cz": r"$C_Z$",
-                "Ge": r"$G_E$", "Gz": r"$G_Z$",
-                "BAz": r"$B_{A_Z}$", "BAe": r"$B_{A_E}$", "BKz": r"$B_{K_Z}$", "BKe": r"$B_{K_E}$"
-            },
-        },
-    },
-    
-    # Figure size (Scientific Reports max width: 180mm)
-    "figsize": (180/25.4, 160/25.4),  # 180mm x 160mm
-    "figsize_combined": (180/25.4, 180/25.4),  # Square for combined
-}
+# Apply Scientific Reports style
+apply_scientific_reports_style()
 
 # ============================================================================
 # LOGGING SETUP
@@ -243,10 +119,10 @@ def align_and_resample_data(data_dict: Dict[str, pd.DataFrame],
         df_sliced = df[(df.index >= common_start) & (df.index <= common_end)]
         
         # Resample ERA5 and GFS to 6h if needed
-        if CONFIG["resample_era5"] and name == "ERA5":
-            df_sliced = df_sliced.resample(CONFIG["resample_freq"]).mean()
-        elif CONFIG["resample_gfs"] and name == "GFS":
-            df_sliced = df_sliced.resample(CONFIG["resample_freq"]).mean()
+        if RESAMPLE_ERA5 and name == "ERA5":
+            df_sliced = df_sliced.resample(RESAMPLE_FREQ).mean()
+        elif RESAMPLE_GFS and name == "GFS":
+            df_sliced = df_sliced.resample(RESAMPLE_FREQ).mean()
         
         aligned[name] = df_sliced
     
@@ -384,7 +260,7 @@ def create_taylor_diagram_overall(overall_stats: Dict[str, Dict],
         Success status
     """
     try:
-        fig = plt.figure(figsize=CONFIG["figsize"])
+        fig = plt.figure(figsize=FIGURE_TYPES["energy"]["figsize"])
         ax = fig.add_subplot(111, projection='polar')
         
         # Set theta to start at top and go clockwise
@@ -412,7 +288,7 @@ def create_taylor_diagram_overall(overall_stats: Dict[str, Dict],
             if stats is None:
                 continue
                 
-            model_config = CONFIG["model_sources"].get(model_name, {})
+            model_config = MODEL_SOURCES.get(model_name, {})
             color = model_config.get("color", "#333333")
             marker = model_config.get("marker", "o")
             label = model_config.get("label", model_name)
@@ -493,13 +369,9 @@ def create_taylor_diagram_overall(overall_stats: Dict[str, Dict],
         # Save
         plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
         
-        # Also save as PDF
-        pdf_path = Path(output_path).with_suffix('.pdf')
-        plt.savefig(pdf_path, format='pdf', bbox_inches='tight', facecolor='white')
-        
         plt.close()
         
-        logger.info(f"      ✅ Saved: {Path(output_path).name} (+ PDF)")
+        logger.info(f"      ✅ Saved: {Path(output_path).name}")
         return True
         
     except Exception as e:
@@ -529,8 +401,7 @@ def create_taylor_diagram_simple(stats_dict: Dict[str, Dict[str, Dict]],
         Success status
     """
     try:
-        fig = plt.figure(figsize=CONFIG.get("figsize_combined", CONFIG["figsize"]) 
-                        if fig_name == "all_combined" else CONFIG["figsize"])
+        fig = plt.figure(figsize=FIGURE_TYPES[fig_name].get("figsize", FIGURE_TYPES["energy"]["figsize"]))
         ax = fig.add_subplot(111, projection='polar')
         
         # Set theta to start at top and go clockwise
@@ -569,7 +440,7 @@ def create_taylor_diagram_simple(stats_dict: Dict[str, Dict[str, Dict]],
         
         # Plot each model
         for model_name, model_stats in stats_dict.items():
-            model_config = CONFIG["model_sources"].get(model_name, {})
+            model_config = MODEL_SOURCES.get(model_name, {})
             color = model_config.get("color", "#333333")
             
             for term, stats in model_stats.items():
@@ -596,7 +467,7 @@ def create_taylor_diagram_simple(stats_dict: Dict[str, Dict[str, Dict]],
                 max_norm_std = max(max_norm_std, norm_std * 1.1)
         
         # Create legend entries
-        for model_name, model_config in CONFIG["model_sources"].items():
+        for model_name, model_config in MODEL_SOURCES.items():
             if model_name in stats_dict:
                 model_handles.append(
                     Line2D([0], [0], marker='o', color='w', 
@@ -682,13 +553,9 @@ def create_taylor_diagram_simple(stats_dict: Dict[str, Dict[str, Dict]],
         # Save
         plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
         
-        # Also save as PDF
-        pdf_path = Path(output_path).with_suffix('.pdf')
-        plt.savefig(pdf_path, format='pdf', bbox_inches='tight', facecolor='white')
-        
         plt.close()
         
-        logger.info(f"      ✅ Saved: {Path(output_path).name} (+ PDF)")
+        logger.info(f"      ✅ Saved: {Path(output_path).name}")
         return True
         
     except Exception as e:
@@ -719,7 +586,7 @@ def main():
     
     # Load reference data (ERA5)
     logger.info("📂 Loading reference data (ERA5)...")
-    ref_config = CONFIG["reference_source"]
+    ref_config = REFERENCE_SOURCE
     ref_results_file = base_dir / "LEC_Results" / ref_config["path"]
     
     # Find the results CSV file
@@ -739,7 +606,7 @@ def main():
     logger.info("📂 Loading model data...")
     all_data = {"ERA5": ref_df}
     
-    for model_name, model_config in CONFIG["model_sources"].items():
+    for model_name, model_config in MODEL_SOURCES.items():
         model_path = base_dir / "LEC_Results" / model_config["path"]
         csv_files = list(model_path.glob("*_results.csv"))
         
@@ -773,14 +640,14 @@ def main():
     figures_to_generate = ["all_combined"]
     
     for fig_name in figures_to_generate:
-        fig_config = CONFIG["figures"][fig_name]
+        fig_config = FIGURE_TYPES[fig_name]
         logger.info("")
         logger.info(f"   📊 Creating Taylor diagram: {fig_config['title']}")
         
         # Compute statistics for each model and term
         stats_dict = {}
         
-        for model_name in CONFIG["model_sources"].keys():
+        for model_name in MODEL_SOURCES.keys():
             if model_name not in aligned_data:
                 continue
                 
@@ -814,10 +681,10 @@ def main():
     logger.info("")
     logger.info("   📊 Creating Taylor diagram: Overall Model Performance")
     
-    all_terms = CONFIG["figures"]["all_combined"]["terms"]
+    all_terms = FIGURE_TYPES["all_combined"]["terms"]
     overall_stats = {}
     
-    for model_name in CONFIG["model_sources"].keys():
+    for model_name in MODEL_SOURCES.keys():
         if model_name not in aligned_data:
             continue
             

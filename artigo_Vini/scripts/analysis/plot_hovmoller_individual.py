@@ -25,99 +25,24 @@ import matplotlib.dates as mdates
 from matplotlib.colors import TwoSlopeNorm, LinearSegmentedColormap
 from datetime import datetime
 
-# ============================================================================
-# SCIENTIFIC REPORTS STYLE
-# ============================================================================
+# Import configuration
+from config import (
+    DATA_SOURCES, 
+    BASE_RESULTS_DIR,
+    BASE_OUTPUT_DIR,
+    PERIODS_FILES,
+    ENERGY_TERMS,
+    CONVERSION_TERMS,
+    GENERATION_TERMS,
+    HOVMOLLER_CONFIG,
+    apply_scientific_reports_style
+)
 
-plt.style.use('seaborn-v0_8-whitegrid')
+# Apply Scientific Reports style
+apply_scientific_reports_style()
 
-plt.rcParams.update({
-    # Font settings (Scientific Reports uses sans-serif)
-    'font.family': 'sans-serif',
-    'font.sans-serif': ['Arial', 'Helvetica', 'DejaVu Sans'],
-    'font.size': 9,
-    
-    # Axes
-    'axes.labelsize': 11,
-    'axes.titlesize': 12,
-    'axes.titleweight': 'bold',
-    'axes.linewidth': 0.8,
-    'axes.labelweight': 'normal',
-    
-    # Ticks
-    'xtick.labelsize': 9,
-    'ytick.labelsize': 9,
-    'xtick.major.width': 0.8,
-    'ytick.major.width': 0.8,
-    'xtick.major.size': 4,
-    'ytick.major.size': 4,
-    
-    # Figure
-    'figure.dpi': 150,
-    'savefig.dpi': 300,
-    'savefig.bbox': 'tight',
-    'savefig.pad_inches': 0.1,
-})
-
-# ============================================================================
-# CONFIGURATION SECTION - Easily customizable parameters
-# ============================================================================
-
-CONFIG = {
-    # Base directories
-    "base_results_dir": "../../LEC_Results",
-    "base_output_dir": "../../Figures",
-    
-    # Data sources to process (including GFS)
-    "data_sources": [
-        "Raoni_ERA5_fixed",
-        "GFS_Raoni_processed_fixed",
-        "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed",
-        "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed",
-        "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed",
-        "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed"
-    ],
-    
-    # Display names for figures
-    # GFS_CPL_EXP = GFS coupled, GFS_DCP_EXP = GFS decoupled
-    # ERA5_CPL_EXP = ERA5 coupled, ERA5_DCP_EXP = ERA5 decoupled
-    "display_names": {
-        "Raoni_ERA5_fixed": "ERA5",
-        "GFS_Raoni_processed_fixed": "GFS",
-        "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed": "GFS_CPL_EXP",
-        "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed": "GFS_DCP_EXP",
-        "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed": "ERA5_CPL_EXP",
-        "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed": "ERA5_DCP_EXP"
-    },
-    
-    # Optional periods file for each source (set to None if not available)
-    "periods_files": {
-        "Raoni_ERA5_fixed": None,
-        "GFS_Raoni_processed_fixed": None,
-        "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed": None,
-        "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed": None,
-        "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed": None,
-        "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed": None
-    },
-    
-    # Energy terms to plot (will be automatically detected from files)
-    "energy_terms": ["Ae", "Az", "Ke", "Kz"],
-    "conversion_terms": ["Ce", "Ck", "Cz", "Ca"],
-    "generation_terms": ["Ge", "Gz"],
-    
-    # Color schemes
-    "sequential_cmap": "YlOrRd",  # For energy terms (progressive)
-    "divergent_cmap": "RdBu_r",   # For conversion/generation terms
-    
-    # Plot styling (Scientific Reports)
-    "figure_size": (180/25.4, 120/25.4),  # 180mm x 120mm
-    "dpi": 300,
-    "title_fontsize": 12,
-    "label_fontsize": 11,
-    "tick_fontsize": 9,
-    "phase_fontsize": 9,
-    "phase_fontweight": "bold",
-    
+# Additional Hovmoller-specific configuration
+HOVMOLLER_LOCAL_CONFIG = {
     # Phase colors and labels
     "phase_colors": {
         "Incipient": "#A8DADC",
@@ -131,6 +56,18 @@ CONFIG = {
         "Mature": "M",
         "Decay": "D"
     },
+    
+    # Plot styling (Scientific Reports)
+    "figure_size": (180/25.4, 120/25.4),  # 180mm x 120mm
+    "title_fontsize": 12,
+    "label_fontsize": 11,
+    "tick_fontsize": 9,
+    "phase_fontsize": 9,
+    "phase_fontweight": "bold",
+    
+    # Color schemes
+    "sequential_cmap": "YlOrRd",  # For energy terms (progressive)
+    "divergent_cmap": "RdBu_r",   # For conversion/generation terms
     
     # Contour settings
     "contour_levels": 15,
@@ -242,12 +179,10 @@ def determine_colormap(term: str) -> Tuple[str, bool]:
     Returns:
         Tuple of (colormap name, use diverging norm)
     """
-    energy_terms = CONFIG["energy_terms"]
-    
-    if term in energy_terms:
-        return CONFIG["sequential_cmap"], False
+    if term in ENERGY_TERMS:
+        return HOVMOLLER_LOCAL_CONFIG["sequential_cmap"], False
     else:
-        return CONFIG["divergent_cmap"], True
+        return HOVMOLLER_LOCAL_CONFIG["divergent_cmap"], True
 
 def add_phase_markers(ax, periods_df: Optional[pd.DataFrame], data_df: pd.DataFrame):
     """
@@ -287,13 +222,13 @@ def add_phase_markers(ax, periods_df: Optional[pd.DataFrame], data_df: pd.DataFr
         
         if data_start <= mid_time <= data_end:
             # Get color for this phase
-            color = CONFIG["phase_colors"].get(phase_name, "#666666")
-            abbrev = CONFIG["phase_abbreviations"].get(phase_name, phase_name[:2])
+            color = HOVMOLLER_LOCAL_CONFIG["phase_colors"].get(phase_name, "#666666")
+            abbrev = HOVMOLLER_LOCAL_CONFIG["phase_abbreviations"].get(phase_name, phase_name[:2])
             
             # Add text at the top of the plot
             ax.text(mid_time, ax.get_ylim()[1] * 0.95, abbrev,
-                   fontsize=CONFIG["phase_fontsize"],
-                   fontweight=CONFIG["phase_fontweight"],
+                   fontsize=HOVMOLLER_LOCAL_CONFIG["phase_fontsize"],
+                   fontweight=HOVMOLLER_LOCAL_CONFIG["phase_fontweight"],
                    ha='center', va='center',
                    bbox=dict(boxstyle='round,pad=0.5', facecolor=color, 
                             edgecolor='black', linewidth=1, alpha=0.8),
@@ -326,7 +261,7 @@ def create_hovmoller(
         cmap_name, use_diverging = determine_colormap(term)
         
         # Create figure
-        fig, ax = plt.subplots(figsize=CONFIG["figure_size"])
+        fig, ax = plt.subplots(figsize=HOVMOLLER_LOCAL_CONFIG["figure_size"])
         
         # Prepare data for plotting
         times = data.index
@@ -347,39 +282,39 @@ def create_hovmoller(
         
         # Create filled contour plot
         contourf = ax.contourf(X, Y, values, 
-                              levels=CONFIG["contour_levels"],
+                              levels=HOVMOLLER_LOCAL_CONFIG["contour_levels"],
                               cmap=cmap_name,
                               norm=norm,
                               extend='both')
         
         # Add contour lines if configured
-        if CONFIG["add_contour_lines"]:
+        if HOVMOLLER_LOCAL_CONFIG["add_contour_lines"]:
             contour_lines = ax.contour(X, Y, values,
-                                      levels=CONFIG["contour_levels"],
-                                      colors=CONFIG["contour_line_color"],
-                                      alpha=CONFIG["contour_line_alpha"],
-                                      linewidths=CONFIG["contour_line_width"])
-            ax.clabel(contour_lines, inline=True, fontsize=8, fmt='%.1e')
+                                      levels=HOVMOLLER_LOCAL_CONFIG["contour_levels"],
+                                      colors=HOVMOLLER_LOCAL_CONFIG["contour_line_color"],
+                                      alpha=HOVMOLLER_LOCAL_CONFIG["contour_line_alpha"],
+                                      linewidths=HOVMOLLER_LOCAL_CONFIG["contour_line_width"])
         
         # Add colorbar
         cbar = plt.colorbar(contourf, ax=ax, pad=0.02)
-        cbar.set_label(r'{} [J$\cdot$m$^{{-2}}$]'.format(term), fontsize=CONFIG["label_fontsize"])
-        cbar.ax.tick_params(labelsize=CONFIG["tick_fontsize"])
+        cbar.set_label(r'{} [J$\cdot$m$^{{-2}}$]'.format(term), fontsize=HOVMOLLER_LOCAL_CONFIG["label_fontsize"])
+        cbar.ax.tick_params(labelsize=HOVMOLLER_LOCAL_CONFIG["tick_fontsize"])
         
         # Add phase markers if available
         add_phase_markers(ax, periods_df, data)
         
         # Get display name for title
-        display_name = CONFIG["display_names"].get(source_name, source_name)
+        source_info = next((v for v in DATA_SOURCES.values() if v["path"] == source_name), None)
+        display_name = source_info["label"] if source_info else source_name
         
         # Labels and title
-        ax.set_xlabel('Date (2021)', fontsize=CONFIG["label_fontsize"])
-        ax.set_ylabel('Pressure Level (hPa)', fontsize=CONFIG["label_fontsize"])
+        ax.set_xlabel('Date (2021)', fontsize=HOVMOLLER_LOCAL_CONFIG["label_fontsize"])
+        ax.set_ylabel('Pressure Level (hPa)', fontsize=HOVMOLLER_LOCAL_CONFIG["label_fontsize"])
         ax.set_title(f'{term} Hovmöller Diagram - {display_name}',
-                    fontsize=CONFIG["title_fontsize"], fontweight='bold')
+                    fontsize=HOVMOLLER_LOCAL_CONFIG["title_fontsize"], fontweight='bold')
         
         # Adjust tick parameters
-        ax.tick_params(labelsize=CONFIG["tick_fontsize"])
+        ax.tick_params(labelsize=HOVMOLLER_LOCAL_CONFIG["tick_fontsize"])
         
         # Invert y-axis (lower pressure at top)
         ax.set_ylim(max(pressure_levels), min(pressure_levels))
@@ -395,15 +330,10 @@ def create_hovmoller(
         
         # Adjust layout and save
         plt.tight_layout()
-        plt.savefig(output_path, dpi=CONFIG["dpi"], bbox_inches='tight', facecolor='white')
-        
-        # Also save as PDF
-        pdf_path = Path(output_path).with_suffix('.pdf')
-        plt.savefig(pdf_path, format='pdf', bbox_inches='tight', facecolor='white')
-        
+        plt.savefig(output_path, dpi=HOVMOLLER_CONFIG["dpi"], bbox_inches='tight', facecolor='white')
         plt.close()
         
-        logger.info(f"      ✅ Saved: {Path(output_path).name} (+ PDF)")
+        logger.info(f"      ✅ Saved: {Path(output_path).name}")
         return True
         
     except Exception as e:
@@ -427,8 +357,8 @@ def process_data_source(source_name: str, base_dir: Path):
     logger.info("=" * 70)
     
     # Setup paths
-    results_dir = base_dir / CONFIG["base_results_dir"] / source_name / "results_vertical_levels"
-    output_dir = base_dir / CONFIG["base_output_dir"] / source_name / "hovmollers"
+    results_dir = base_dir / BASE_RESULTS_DIR / source_name / "results_vertical_levels"
+    output_dir = base_dir / BASE_OUTPUT_DIR / source_name / "hovmollers"
     
     # Check if results directory exists
     if not results_dir.exists():
@@ -440,9 +370,9 @@ def process_data_source(source_name: str, base_dir: Path):
     logger.info(f"📁 Output directory: {output_dir}")
     
     # Load periods if available
-    periods_file = CONFIG["periods_files"].get(source_name)
+    periods_file = PERIODS_FILES.get(source_name)
     if periods_file:
-        periods_file = base_dir / CONFIG["base_results_dir"] / source_name / periods_file
+        periods_file = base_dir / BASE_RESULTS_DIR / source_name / periods_file
     periods_df = load_periods(str(periods_file) if periods_file else None)
     
     # Find all pressure level CSV files
@@ -507,16 +437,17 @@ def main():
     
     # Process each data source
     total_success = 0
-    total_sources = len(CONFIG["data_sources"])
+    total_sources = len(DATA_SOURCES)
     
-    for source in CONFIG["data_sources"]:
-        success = process_data_source(source, base_dir)
+    for source_info in DATA_SOURCES.values():
+        source_path = source_info["path"]
+        success = process_data_source(source_path, base_dir)
         total_success += success
     
     # Final summary
     logger.info("=" * 70)
     logger.info(f"🎉 ALL COMPLETED: {total_success} total Hovmöller diagrams generated")
-    logger.info(f"📂 Figures saved in: {base_dir / CONFIG['base_output_dir']}")
+    logger.info(f"📂 Figures saved in: {base_dir / BASE_OUTPUT_DIR}")
     logger.info("=" * 70)
     logger.info("")
 

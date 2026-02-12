@@ -28,206 +28,27 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib.lines import Line2D
 
-# ============================================================================
-# SCIENTIFIC REPORTS STYLE CONFIGURATION
-# ============================================================================
+# Import configuration
+from config import (
+    DATA_SOURCES,
+    BASE_RESULTS_DIR,
+    BASE_OUTPUT_DIR,
+    RESAMPLE_ERA5,
+    RESAMPLE_GFS,
+    RESAMPLE_FREQ,
+    FIGURE_TYPES,
+    apply_scientific_reports_style
+)
 
-# Use a clean, publication-ready style
-plt.style.use('seaborn-v0_8-whitegrid')
+# Apply Scientific Reports style
+apply_scientific_reports_style()
 
-# Scientific Reports typography
-plt.rcParams.update({
-    # Font settings (Scientific Reports uses sans-serif)
-    'font.family': 'sans-serif',
-    'font.sans-serif': ['Arial', 'Helvetica', 'DejaVu Sans'],
-    'font.size': 9,
-    
-    # Axes
-    'axes.labelsize': 10,
-    'axes.titlesize': 11,
-    'axes.titleweight': 'bold',
-    'axes.linewidth': 0.8,
-    'axes.labelweight': 'normal',
-    'axes.spines.top': False,
-    'axes.spines.right': False,
-    
-    # Ticks
-    'xtick.labelsize': 8,
-    'ytick.labelsize': 8,
-    'xtick.major.width': 0.8,
-    'ytick.major.width': 0.8,
-    'xtick.major.size': 4,
-    'ytick.major.size': 4,
-    
-    # Legend
-    'legend.fontsize': 8,
-    'legend.frameon': True,
-    'legend.framealpha': 0.9,
-    'legend.edgecolor': '0.8',
-    
-    # Figure
-    'figure.dpi': 150,
-    'savefig.dpi': 300,
-    'savefig.bbox': 'tight',
-    'savefig.pad_inches': 0.1,
-    
-    # Lines
-    'lines.linewidth': 1.5,
-    'lines.markersize': 4,
-    
-    # Grid
-    'grid.alpha': 0.3,
-    'grid.linewidth': 0.5,
-    'grid.linestyle': '-',
-})
-
-# ============================================================================
-# DATA SOURCE CONFIGURATION
-# ============================================================================
-
-CONFIG = {
-    # Base directories
-    "base_results_dir": "../../LEC_Results",
-    "base_output_dir": "../../Figures/Comparisons/multiplot",
-    
-    # Data sources with distinct colors
-    "data_sources": {
-        "ERA5": {
-            "path": "Raoni_ERA5_fixed",
-            "label": "ERA5",
-            "color": "#2c3e50",      # Dark blue-gray
-            "linestyle": "-",
-            "marker": "o",
-            "zorder": 6,
-        },
-        "GFS": {
-            "path": "GFS_Raoni_processed_fixed",
-            "label": "GFS",
-            "color": "#27ae60",      # Green
-            "linestyle": "-",
-            "marker": "s",
-            "zorder": 5,
-        },
-        "GFS_CPL_EXP": {
-            "path": "WRF_sacoplamento-RAONI-6h_INTRP-Regular_processed_fixed",
-            "label": "GFS_CPL_EXP",
-            "color": "#e74c3c",      # Red (GFS coupled)
-            "linestyle": "-",
-            "marker": "^",
-            "zorder": 4,
-        },
-        "GFS_DCP_EXP": {
-            "path": "WRF-cacoplamento_Raoni-6h_INTRP_Regular_processed_fixed",
-            "label": "GFS_DCP_EXP",
-            "color": "#3498db",      # Blue (GFS decoupled)
-            "linestyle": "--",
-            "marker": "v",
-            "zorder": 3,
-        },
-        "ERA5_CPL_EXP": {
-            "path": "WRFacoplado-ERA5-RAONI-6h_INTRP-Regular_processed_fixed",
-            "label": "ERA5_CPL_EXP",
-            "color": "#9b59b6",      # Purple (ERA5 coupled)
-            "linestyle": "-",
-            "marker": "D",
-            "zorder": 2,
-        },
-        "ERA5_DCP_EXP": {
-            "path": "WRFsa-ERA5-RAONI-6h_INTRP-Regular_processed_fixed",
-            "label": "ERA5_DCP_EXP",
-            "color": "#f39c12",      # Orange (ERA5 decoupled)
-            "linestyle": "--",
-            "marker": "p",
-            "zorder": 1,
-        }
-    },
-    
-    # Resampling configuration
-    "resample_era5": True,
-    "resample_gfs": True,
-    "resample_freq": "6h",  # Match WRF frequency
-    
-    # Terms organized by figure type
-    "figures": {
-        "energy": {
-            "title": "Energy Reservoirs",
-            "ylabel": r"Energy (J$\cdot$m$^{-2}$)",
-            "terms": ["Az", "Ae", "Kz", "Ke"],
-            "term_labels": {
-                "Az": r"$A_Z$",
-                "Ae": r"$A_E$", 
-                "Kz": r"$K_Z$",
-                "Ke": r"$K_E$"
-            },
-            "term_titles": {
-                "Az": "Zonal Available Potential Energy",
-                "Ae": "Eddy Available Potential Energy",
-                "Kz": "Zonal Kinetic Energy",
-                "Ke": "Eddy Kinetic Energy"
-            },
-            "ncols": 2,
-            "figsize": (180/25.4, 150/25.4),  # 180mm x 150mm (Scientific Reports max width)
-        },
-        "conversion": {
-            "title": "Energy Conversion Terms",
-            "ylabel": r"Rate (W$\cdot$m$^{-2}$)",
-            "terms": ["Ca", "Ce", "Ck", "Cz"],
-            "term_labels": {
-                "Ca": r"$C_A$",
-                "Ce": r"$C_E$",
-                "Ck": r"$C_K$",
-                "Cz": r"$C_Z$"
-            },
-            "term_titles": {
-                "Ca": r"$A_Z \rightarrow A_E$",
-                "Ce": r"$A_E \rightarrow K_E$",
-                "Ck": r"$K_E \rightarrow K_Z$",
-                "Cz": r"$K_Z \rightarrow A_Z$"
-            },
-            "ncols": 2,
-            "figsize": (180/25.4, 150/25.4),
-        },
-        "generation": {
-            "title": "Generation Terms",
-            "ylabel": r"Rate (W$\cdot$m$^{-2}$)",
-            "terms": ["Ge", "Gz"],
-            "term_labels": {
-                "Ge": r"$G_E$",
-                "Gz": r"$G_Z$"
-            },
-            "term_titles": {
-                "Ge": "Eddy Generation",
-                "Gz": "Zonal Generation"
-            },
-            "ncols": 2,
-            "figsize": (180/25.4, 80/25.4),  # Smaller height for 2 panels
-        },
-        "boundary": {
-            "title": "Boundary Transport Terms",
-            "ylabel": r"Transport (W$\cdot$m$^{-2}$)",
-            "terms": ["BAz", "BAe", "BKz", "BKe"],
-            "term_labels": {
-                "BAz": r"$B_{A_Z}$",
-                "BAe": r"$B_{A_E}$",
-                "BKz": r"$B_{K_Z}$",
-                "BKe": r"$B_{K_E}$"
-            },
-            "term_titles": {
-                "BAz": "Zonal APE Boundary",
-                "BAe": "Eddy APE Boundary",
-                "BKz": "Zonal KE Boundary",
-                "BKe": "Eddy KE Boundary"
-            },
-            "ncols": 2,
-            "figsize": (180/25.4, 150/25.4),
-        },
-    },
-    
-    # Plot styling
+# Additional local configuration for plotting style
+LOCAL_CONFIG = {
     "linewidth": 1.5,
     "markersize": 4,
     "markevery": 2,  # Plot marker every N points
-    "alpha": 0.9,
+    "alpha": 0.8,
 }
 
 # ============================================================================
@@ -259,11 +80,12 @@ def load_results(filepath: str, source_key: str) -> Optional[pd.DataFrame]:
         df = pd.read_csv(filepath, index_col=0, parse_dates=True)
         df.index = pd.to_datetime(df.index)
         
-        # Resample high-frequency data to match WRF
-        if source_key in ["ERA5", "GFS"]:
-            if (source_key == "ERA5" and CONFIG["resample_era5"]) or \
-               (source_key == "GFS" and CONFIG["resample_gfs"]):
-                df = df.resample(CONFIG["resample_freq"]).mean()
+        # Resample all datasets to the configured frequency (e.g., 6h)
+        try:
+            df = df.resample(RESAMPLE_FREQ).mean()
+        except Exception:
+            # If resampling fails for any reason, continue with original data
+            logger.debug(f"Resampling failed for {filepath}; using original frequency")
         
         return df
     except Exception as e:
@@ -279,9 +101,9 @@ def load_all_data(base_dir: Path) -> Dict[str, pd.DataFrame]:
     
     all_data = {}
     
-    for source_key, source_info in CONFIG["data_sources"].items():
+    for source_key, source_info in DATA_SOURCES.items():
         source_path = source_info["path"]
-        results_dir = base_dir / CONFIG["base_results_dir"] / source_path
+        results_dir = base_dir / BASE_RESULTS_DIR / source_path
         
         if not results_dir.exists():
             logger.warning(f"   ⚠️  Directory not found: {source_path}")
@@ -303,7 +125,7 @@ def load_all_data(base_dir: Path) -> Dict[str, pd.DataFrame]:
             logger.info(f"      ✅ {len(data)} time steps")
     
     logger.info("")
-    logger.info(f"✅ Loaded {len(all_data)}/{len(CONFIG['data_sources'])} data sources")
+    logger.info(f"✅ Loaded {len(all_data)}/{len(DATA_SOURCES)} data sources")
     logger.info("")
     
     return all_data
@@ -338,11 +160,25 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
     try:
         terms = fig_config["terms"]
         n_terms = len(terms)
-        ncols = fig_config["ncols"]
+        ncols = fig_config.get("ncols", 2)  # Default to 2 columns if not specified
         nrows = int(np.ceil(n_terms / ncols))
         
-        figsize = fig_config["figsize"]
-        
+        # Choose figsize; for 'all_combined' compute height proportional to rows
+        default_figsize = fig_config.get("figsize", (8, 6))
+        width = default_figsize[0]
+        # Default per-row height in inches (can be overridden in config via 'row_height')
+        default_row_height = fig_config.get("row_height", 3.0)
+
+        if fig_key == "all_combined":
+            # prefer explicit combined size in config
+            if "figsize_combined" in fig_config:
+                figsize = fig_config["figsize_combined"]
+            else:
+                # scale height with number of rows to give vertical space between subplots
+                figsize = (width, max(default_figsize[1], default_row_height * nrows))
+        else:
+            figsize = default_figsize
+
         fig, axes = plt.subplots(nrows, ncols, figsize=figsize, squeeze=False)
         axes = axes.flatten()
         
@@ -357,7 +193,7 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
             
             # Plot each data source
             for source_key, source_data in all_data.items():
-                source_info = CONFIG["data_sources"][source_key]
+                source_info = DATA_SOURCES[source_key]
                 
                 if term not in source_data.columns:
                     continue
@@ -376,10 +212,10 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
                     color=source_info["color"],
                     linestyle=source_info["linestyle"],
                     marker=source_info["marker"],
-                    linewidth=CONFIG["linewidth"],
-                    markersize=CONFIG["markersize"],
-                    markevery=CONFIG["markevery"],
-                    alpha=CONFIG["alpha"],
+                    linewidth=LOCAL_CONFIG["linewidth"],
+                    markersize=LOCAL_CONFIG["markersize"],
+                    markevery=LOCAL_CONFIG["markevery"],
+                    alpha=LOCAL_CONFIG["alpha"],
                     zorder=source_info["zorder"]
                 )
                 has_data = True
@@ -392,14 +228,15 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
             ax.axhline(y=0, color='black', linestyle='-', linewidth=0.5, alpha=0.5, zorder=0)
             
             # Subplot title with term label
-            term_title = fig_config["term_titles"].get(term, term)
-            term_label = fig_config["term_labels"].get(term, term)
+            term_title = fig_config.get("term_titles", {}).get(term, term)
+            term_label = fig_config.get("term_labels", {}).get(term, term)
             ax.set_title(f"({chr(97+idx)}) {term_title} ({term_label})", 
                         fontsize=10, fontweight='bold', loc='left')
             
             # Y-axis label (only on left column)
             if idx % ncols == 0:
-                ax.set_ylabel(fig_config["ylabel"], fontsize=9)
+                ylabel = fig_config.get("ylabel", "Value")
+                ax.set_ylabel(ylabel, fontsize=9)
             
             # X-axis formatting
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d'))
@@ -416,6 +253,22 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
             # Grid
             ax.grid(True, alpha=0.3, linestyle='-', linewidth=0.5)
             ax.set_axisbelow(True)
+
+            # Move scientific notation offset (e.g. '1e6') left for energy figure
+            if fig_key == "energy":
+                offset_text = ax.yaxis.get_offset_text()
+                try:
+                    # Position in axes coordinates (left of axis)
+                    offset_text.set_transform(ax.transAxes)
+                    offset_text.set_position((-0.12, 1.02))
+                    offset_text.set_horizontalalignment('left')
+                except Exception:
+                    # Fallback: try simple x-shift
+                    try:
+                        offset_text.set_x(-0.08)
+                        offset_text.set_horizontalalignment('left')
+                    except Exception:
+                        pass
         
         # Hide unused subplots
         for idx in range(n_terms, len(axes)):
@@ -425,13 +278,13 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
         handles = []
         labels = []
         for source_key in all_data.keys():
-            source_info = CONFIG["data_sources"][source_key]
+            source_info = DATA_SOURCES[source_key]
             handle = Line2D([0], [0], 
                            color=source_info["color"],
                            linestyle=source_info["linestyle"],
                            marker=source_info["marker"],
-                           linewidth=CONFIG["linewidth"],
-                           markersize=CONFIG["markersize"])
+                           linewidth=LOCAL_CONFIG["linewidth"],
+                           markersize=LOCAL_CONFIG["markersize"])
             handles.append(handle)
             labels.append(source_info["label"])
         
@@ -447,23 +300,20 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
                   frameon=True,
                   fontsize=9)
         
-        # Adjust layout
+        # Adjust layout; give more bottom space for combined figure
         plt.tight_layout()
-        plt.subplots_adjust(bottom=0.12, hspace=0.35, wspace=0.25)
+        bottom_pad = 0.16 if fig_key != "all_combined" else 0
+        plt.subplots_adjust(bottom=bottom_pad, hspace=0.35, wspace=0.25)
         
         # Save figure
         output_path.parent.mkdir(parents=True, exist_ok=True)
         
-        # Save in multiple formats
+        # Save in PNG format
         plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
-        
-        # Also save as PDF for publication
-        pdf_path = output_path.with_suffix('.pdf')
-        plt.savefig(pdf_path, format='pdf', bbox_inches='tight', facecolor='white')
         
         plt.close()
         
-        logger.info(f"   ✅ Saved: {output_path.name} (+ PDF)")
+        logger.info(f"   ✅ Saved: {output_path.name}")
         return True
         
     except Exception as e:
@@ -494,7 +344,7 @@ def main():
         return
     
     # Create output directory
-    output_dir = base_dir / CONFIG["base_output_dir"]
+    output_dir = base_dir / (BASE_OUTPUT_DIR + "/Comparisons/multiplot")
     output_dir.mkdir(parents=True, exist_ok=True)
     logger.info(f"📁 Output directory: {output_dir}")
     logger.info("")
@@ -506,7 +356,7 @@ def main():
     
     success_count = 0
     
-    for fig_key, fig_config in CONFIG["figures"].items():
+    for fig_key, fig_config in FIGURE_TYPES.items():
         logger.info(f"\n   📊 Creating: {fig_config['title']}")
         
         output_path = output_dir / f"timeseries_{fig_key}_multiplot.png"
@@ -517,7 +367,7 @@ def main():
     # Summary
     logger.info("")
     logger.info("=" * 70)
-    logger.info(f"🎉 COMPLETED: {success_count}/{len(CONFIG['figures'])} figures generated")
+    logger.info(f"🎉 COMPLETED: {success_count}/{len(FIGURE_TYPES)} figures generated")
     logger.info(f"📂 Saved to: {output_dir}")
     logger.info("=" * 70)
     logger.info("")

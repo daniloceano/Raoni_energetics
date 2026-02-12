@@ -1,0 +1,116 @@
+2026-02-10 19:53:50,216 - lorenzcycletoolkit - INFO - 🚀 Starting LEC analysis
+2026-02-10 19:53:50,216 - lorenzcycletoolkit - INFO - ⚙️ Command line arguments: Namespace(infile='ERA5_COAWST_Sem_Aco_processed.nc', residuals=True, fixed=True, track=False, choose=False, zeta=False, mpas=False, plots=True, verbosity=True, cdsapi=False, time_resolution=3, trackfile='inputs/track', box_limits='inputs/box_limits', outname=None)
+2026-02-10 19:53:50,216 - lorenzcycletoolkit - DEBUG - 📝 Variables specified by the user in: inputs/namelist
+2026-02-10 19:53:50,216 - lorenzcycletoolkit - DEBUG - 📂 Attempting to read inputs/namelist file...
+2026-02-10 19:53:50,221 - lorenzcycletoolkit - DEBUG - ✅ Variable list loaded:
+                           Variable          Units
+standard_name                                     
+Air Temperature                  TT              K
+Eastward Wind Component          UU            m/s
+Northward Wind Component         VV            m/s
+Omega Velocity                    W           Pa/s
+Geopotential Height             GHT              m
+Longitude                 longitude   degrees_east
+Latitude                   latitude  degrees_north
+Time                           time     datetime64
+Vertical Level              plevels            hPa
+2026-02-10 19:53:50,221 - lorenzcycletoolkit - DEBUG - 📂 Opening input data... 
+2026-02-10 19:53:50,388 - lorenzcycletoolkit - DEBUG - ✅ Data opened successfully.
+2026-02-10 19:53:50,390 - lorenzcycletoolkit - DEBUG - 🌐 Assigning geospatial coordinates in radians... 
+2026-02-10 19:53:50,391 - lorenzcycletoolkit - DEBUG - ✅ Geospatial coordinates assigned.
+2026-02-10 19:53:50,396 - lorenzcycletoolkit - DEBUG - ✅ Data processing complete.
+2026-02-10 19:53:50,399 - lorenzcycletoolkit - DEBUG - 💾 Loading data into memory..
+2026-02-10 19:54:05,519 - lorenzcycletoolkit - DEBUG - ✅ Data loaded into memory.
+2026-02-10 19:54:05,520 - lorenzcycletoolkit - INFO - 🗺️ Bounding box: lon=[-60.0, -28.0], lat=[-48.0, -17.5]
+2026-02-10 19:56:27,174 - lorenzcycletoolkit - DEBUG - Computing Az...
+2026-02-10 19:56:27,629 - lorenzcycletoolkit - DEBUG - Ok.
+2026-02-10 19:56:27,630 - lorenzcycletoolkit - DEBUG - Computing Ae...
+2026-02-10 19:56:43,804 - lorenzcycletoolkit - DEBUG - Ok.
+2026-02-10 19:56:43,816 - lorenzcycletoolkit - DEBUG - Computing Kz...
+2026-02-10 19:56:43,942 - lorenzcycletoolkit - DEBUG - Ok.
+2026-02-10 19:56:43,942 - lorenzcycletoolkit - DEBUG - Computing Ke...
+2026-02-10 19:57:40,170 - lorenzcycletoolkit - DEBUG - Ok.
+2026-02-10 19:57:40,171 - lorenzcycletoolkit - INFO - ⚡ Computed energy contents (Az, Ae, Kz, Ke)
+2026-02-10 19:57:40,172 - lorenzcycletoolkit - DEBUG - Calculating CZ...
+2026-02-10 19:57:40,237 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 19:57:40,238 - lorenzcycletoolkit - DEBUG - Calculating CA...
+2026-02-10 19:58:12,679 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 19:58:12,680 - lorenzcycletoolkit - DEBUG - Calculating CK...
+2026-02-10 19:58:49,752 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 19:58:49,753 - lorenzcycletoolkit - DEBUG - Calculating CE...
+2026-02-10 19:58:52,549 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 19:58:52,552 - lorenzcycletoolkit - INFO - 🔄 Computed conversion terms (Cz, Ca, Ck, Ce)
+2026-02-10 19:58:52,555 - lorenzcycletoolkit - DEBUG - Calculating BAZ...
+2026-02-10 19:59:01,518 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 19:59:01,518 - lorenzcycletoolkit - DEBUG - Calculating BAE...
+2026-02-10 19:59:13,241 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 19:59:13,241 - lorenzcycletoolkit - DEBUG - Calculating BKZ...
+2026-02-10 19:59:29,195 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 19:59:29,211 - lorenzcycletoolkit - DEBUG - Calculating BKE...
+2026-02-10 19:59:39,552 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 19:59:39,553 - lorenzcycletoolkit - DEBUG - Calculating BΦZ...
+2026-02-10 19:59:39,608 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 19:59:39,608 - lorenzcycletoolkit - DEBUG - Calculating BΦE...
+2026-02-10 19:59:52,720 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 19:59:52,720 - lorenzcycletoolkit - INFO - 🏁 Computed boundary terms (BAz, BAe, BKz, BKe, BΦZ, BΦE)
+2026-02-10 19:59:52,731 - lorenzcycletoolkit - DEBUG - Computing Gz...
+2026-02-10 19:59:52,753 - lorenzcycletoolkit - DEBUG - Ok.
+2026-02-10 19:59:52,754 - lorenzcycletoolkit - DEBUG - Computing Ge...
+2026-02-10 20:00:00,014 - lorenzcycletoolkit - DEBUG - Ok.
+2026-02-10 20:00:00,018 - lorenzcycletoolkit - INFO - 🔥 Computed generation/dissipation terms (Gz, Ge, Dz, De)
+2026-02-10 20:00:00,030 - lorenzcycletoolkit - DEBUG - Estimating budget values using finite differences...
+2026-02-10 20:00:00,032 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 20:00:00,032 - lorenzcycletoolkit - DEBUG - Estimating residuals...
+2026-02-10 20:00:00,038 - lorenzcycletoolkit - DEBUG - Done.
+2026-02-10 20:00:00,038 - lorenzcycletoolkit - INFO - 📈 Computed budget and residuals
+2026-02-10 20:00:00,139 - lorenzcycletoolkit - INFO - 💾 Results saved to LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/ERA5_COAWST_Sem_Aco_processed_fixed_results.csv
+2026-02-10 20:00:00,431 - lorenzcycletoolkit - INFO - 🎨 Generating plots...
+2026-02-10 20:00:00,432 - lorenzcycletoolkit - INFO - Plotting timeseries...
+2026-02-10 20:00:01,629 - lorenzcycletoolkit - INFO - Figure saved for energy in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/timeseries
+2026-02-10 20:00:01,681 - lorenzcycletoolkit - INFO - Figure saved for conversion in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/timeseries
+2026-02-10 20:00:01,732 - lorenzcycletoolkit - INFO - Figure saved for boundary in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/timeseries
+2026-02-10 20:00:01,804 - lorenzcycletoolkit - INFO - Figure saved for budget_diff in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/timeseries
+2026-02-10 20:00:02,011 - lorenzcycletoolkit - INFO - Figure saved for residuals in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/timeseries
+2026-02-10 20:00:02,214 - lorenzcycletoolkit - INFO - Figure saved for generation_dissipation in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/timeseries
+2026-02-10 20:00:03,056 - lorenzcycletoolkit - INFO - Figure saved for comparing_generation in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/timeseries
+2026-02-10 20:00:03,101 - lorenzcycletoolkit - INFO - Figure saved for comparing_dissipation in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/timeseries
+2026-02-10 20:00:03,101 - lorenzcycletoolkit - INFO -   ✅ Time series plot generated
+2026-02-10 20:00:03,101 - lorenzcycletoolkit - INFO - Plotting box limits on map...
+2026-02-10 20:00:03,388 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures
+2026-02-10 20:00:03,388 - lorenzcycletoolkit - INFO -   ✅ Box limits plot generated
+2026-02-10 20:00:03,389 - lorenzcycletoolkit - INFO - Plotting boxplots...
+2026-02-10 20:00:03,406 - lorenzcycletoolkit - INFO - Creating boxplot for each time
+2026-02-10 20:00:04,858 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/boxplots
+2026-02-10 20:00:06,314 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/boxplots
+2026-02-10 20:00:07,055 - lorenzcycletoolkit - INFO - Figure saved in directory: ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/boxplots
+2026-02-10 20:00:07,055 - lorenzcycletoolkit - INFO - Creating boxplot for each vertical level
+2026-02-10 20:00:07,342 - lorenzcycletoolkit - INFO - Created ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/boxplots/boxplot_vertical_levels_energy.png
+2026-02-10 20:00:07,641 - lorenzcycletoolkit - INFO - Created ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/boxplots/boxplot_vertical_levels_conversion.png
+2026-02-10 20:00:07,807 - lorenzcycletoolkit - INFO - Created ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/boxplots/boxplot_vertical_levels_generation_dissipation.png
+2026-02-10 20:00:07,807 - lorenzcycletoolkit - INFO - Creating boxplot for each term
+2026-02-10 20:00:07,866 - lorenzcycletoolkit - INFO - boxplot_terms_energy.png created
+2026-02-10 20:00:07,907 - lorenzcycletoolkit - INFO - boxplot_terms_conversion.png created
+2026-02-10 20:00:07,949 - lorenzcycletoolkit - INFO - boxplot_terms_boundary.png created
+2026-02-10 20:00:07,996 - lorenzcycletoolkit - INFO - boxplot_terms_budget_diff.png created
+2026-02-10 20:00:08,039 - lorenzcycletoolkit - INFO - boxplot_terms_residuals.png created
+2026-02-10 20:00:08,090 - lorenzcycletoolkit - INFO - boxplot_terms_generation_dissipation.png created
+2026-02-10 20:00:08,128 - lorenzcycletoolkit - INFO - boxplot_terms_comparing_generation.png created
+2026-02-10 20:00:08,160 - lorenzcycletoolkit - INFO - boxplot_terms_comparing_dissipation.png created
+2026-02-10 20:00:08,160 - lorenzcycletoolkit - INFO -   ✅ Boxplot terms generated
+2026-02-10 20:00:08,176 - lorenzcycletoolkit - INFO - Creating hovmoller diagrams
+2026-02-10 20:00:08,447 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/hovmollers/hovmoller_energy.png
+2026-02-10 20:00:08,806 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/hovmollers/hovmoller_conversion.png
+2026-02-10 20:00:09,010 - lorenzcycletoolkit - INFO - Figure saved to LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/hovmollers/hovmoller_generation_dissipation.png
+2026-02-10 20:00:09,010 - lorenzcycletoolkit - INFO - Hovmoller diagrams created
+2026-02-10 20:00:09,010 - lorenzcycletoolkit - INFO -   ✅ Hovmöller plot generated
+2026-02-10 20:00:09,101 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/LEC/LEC_example.png
+2026-02-10 20:00:09,139 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/LEC/LEC_2021-06-25.png
+2026-02-10 20:00:09,182 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/LEC/LEC_2021-06-26.png
+2026-02-10 20:00:09,223 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/LEC/LEC_2021-06-27.png
+2026-02-10 20:00:09,264 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/LEC/LEC_2021-06-28.png
+2026-02-10 20:00:09,364 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/LEC/LEC_2021-06-29.png
+2026-02-10 20:00:09,405 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/LEC/LEC_2021-06-30.png
+2026-02-10 20:00:09,445 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/LEC/LEC_2021-07-01.png
+2026-02-10 20:00:09,485 - lorenzcycletoolkit - INFO - Lorenz cycle plot saved to ./LEC_Results/ERA5_COAWST_Sem_Aco_processed_fixed/Figures/LEC/LEC_2021-07-02.png
+2026-02-10 20:00:09,485 - lorenzcycletoolkit - INFO -   ✅ Lorenz cycle plot generated
+2026-02-10 20:00:09,485 - lorenzcycletoolkit - INFO - 🎉 Analysis complete! Fixed framework ran in 379.09 seconds
