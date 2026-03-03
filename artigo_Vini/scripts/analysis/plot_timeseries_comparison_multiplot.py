@@ -254,21 +254,12 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
             ax.grid(True, alpha=0.3, linestyle='-', linewidth=0.5)
             ax.set_axisbelow(True)
 
-            # Move scientific notation offset (e.g. '1e6') left for energy figure
+            # Move scientific notation offset (e.g. '1e6') to avoid overlapping title
             if fig_key == "energy":
-                offset_text = ax.yaxis.get_offset_text()
                 try:
-                    # Position in axes coordinates (left of axis)
-                    offset_text.set_transform(ax.transAxes)
-                    offset_text.set_position((-0.12, 1.02))
-                    offset_text.set_horizontalalignment('left')
+                    ax.yaxis.get_offset_text().set_visible(True)
                 except Exception:
-                    # Fallback: try simple x-shift
-                    try:
-                        offset_text.set_x(-0.08)
-                        offset_text.set_horizontalalignment('left')
-                    except Exception:
-                        pass
+                    pass
         
         # Hide unused subplots
         for idx in range(n_terms, len(axes)):
@@ -301,15 +292,13 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
                   fontsize=9)
         
         # Adjust layout; give more bottom space for combined figure
-        plt.tight_layout()
-        bottom_pad = 0.16 if fig_key != "all_combined" else 0
-        plt.subplots_adjust(bottom=bottom_pad, hspace=0.35, wspace=0.25)
+        bottom_pad = 0.16 if fig_key != "all_combined" else 0.08
+        plt.subplots_adjust(bottom=bottom_pad, hspace=0.45, wspace=0.25)
         
-        # Save figure
+        # Save figure (avoid bbox_inches='tight' - it interacts badly with
+        # custom artist transforms and can produce multi-thousand-inch images)
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        
-        # Save in PNG format
-        plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
+        plt.savefig(output_path, dpi=300, facecolor='white')
         
         plt.close()
         

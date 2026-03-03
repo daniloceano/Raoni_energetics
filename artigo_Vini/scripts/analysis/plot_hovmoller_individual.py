@@ -383,7 +383,7 @@ def process_data_source(source_name: str, base_dir: Path):
         csv_files = sorted(results_dir.glob("*_plevels.csv"))
     
     if not csv_files:
-        logger.error(f"❌ No CSV files found in {results_dir}")
+        logger.warning(f"⚠️  No pressure-level CSV files found in {results_dir} — skipping Hovmöller for {source_name}")
         return 0
     
     logger.info(f"📊 Found {len(csv_files)} data files")
