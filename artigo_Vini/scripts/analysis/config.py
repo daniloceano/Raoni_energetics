@@ -43,15 +43,15 @@ DATA_SOURCES = {
     "ERA5": {
         "path": "Raoni_ERA5_fixed",
         "label": "ERA5",
-        "color": "#2c3e50",      # Dark blue-gray
+        "color": "#2627ff",      # Dark blue-gray
         "linestyle": "-",
-        "marker": "o",
+        "marker": "s",
         "zorder": 6,
     },
     "GFS": {
         "path": "GFS_Raoni_processed_fixed",
         "label": "GFS",
-        "color": "#27ae60",      # Green
+        "color": "#db4848",      # Green
         "linestyle": "-",
         "marker": "s",
         "zorder": 5,
@@ -59,7 +59,7 @@ DATA_SOURCES = {
     "GFS_CPL": {
         "path": "GFS_COAWST_Acoplado_processed_fixed",
         "label": "GFS_CPL",
-        "color": "#e74c3c",      # Red (GFS coupled)
+        "color": "#ed8679",      # Red (GFS coupled)
         "linestyle": "-",
         "marker": "^",
         "zorder": 4,
@@ -67,25 +67,25 @@ DATA_SOURCES = {
     "GFS_DCP": {
         "path": "GFS_COAWST_SEM_Acoplamento_processed_fixed",
         "label": "GFS_DCP",
-        "color": "#3498db",      # Blue (GFS decoupled)
+        "color": "#ed8679",      # Blue (GFS decoupled)
         "linestyle": "--",
-        "marker": "v",
+        "marker": "o",
         "zorder": 3,
     },
     "ERA5_CPL": {
         "path": "ERA5_COAWST_Acoplado_processed_fixed",
         "label": "ERA5_CPL",
-        "color": "#9b59b6",      # Purple (ERA5 coupled)
+        "color": "#74b8e5",      # Purple (ERA5 coupled)
         "linestyle": "-",
-        "marker": "D",
+        "marker": "^",
         "zorder": 2,
     },
     "ERA5_DCP": {
         "path": "ERA5_COAWST_Sem_Aco_processed_fixed",
         "label": "ERA5_DCP",
-        "color": "#f39c12",      # Orange (ERA5 decoupled)
+        "color": "#74b8e5",      # Orange (ERA5 decoupled)
         "linestyle": "--",
-        "marker": "p",
+        "marker": "o",
         "zorder": 1,
     }
 }
@@ -202,7 +202,7 @@ FIGURE_TYPES = {
         "term_labels": ENERGY_TERM_LABELS,
         "term_titles": ENERGY_TERM_TITLES,
         "ncols": 2,
-        "figsize": (180/25.4, 150/25.4),  # 180mm x 150mm (Scientific Reports max width)
+        "figsize": (8, 6),  # 180mm x 150mm (Scientific Reports max width)
     },
     "conversion": {
         "title": "Energy Conversion Terms",

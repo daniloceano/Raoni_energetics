@@ -305,12 +305,13 @@ def create_taylor_diagram_overall(overall_stats: Dict[str, Dict],
             # Plot point with larger marker
             ax.plot(theta, norm_std, marker, color=color, 
                    markersize=16, markeredgecolor='white', 
-                   markeredgewidth=1.5, zorder=5)
+                   markeredgewidth=1.5, zorder=5, alpha=0.7)
             
             # Add annotation with correlation value
             ax.annotate(f'r={corr:.2f}', (theta, norm_std),
                        textcoords="offset points", xytext=(8, 8),
-                       fontsize=9, color=color, fontweight='bold')
+                       fontsize=9, color=color, fontweight='bold',
+                       alpha=0.7)
             
             max_norm_std = max(max_norm_std, norm_std * 1.1)
             

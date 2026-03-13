@@ -259,7 +259,7 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
                 offset_text = ax.yaxis.get_offset_text()
                 try:
                     # Position in axes coordinates (left of axis)
-                    offset_text.set_transform(ax.transAxes)
+                    # offset_text.set_transform(ax.transAxes)
                     offset_text.set_position((-0.12, 1.02))
                     offset_text.set_horizontalalignment('left')
                 except Exception:
