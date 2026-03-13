@@ -576,11 +576,8 @@ def main():
     logger.info("=" * 70)
     logger.info("")
     
-    # Get base directory (artigo_Vini)
-    base_dir = Path(__file__).parent.parent.parent.resolve()
-    
-    # Create output directory
-    output_dir = base_dir / "Figures" / "Comparisons" / "taylor_diagrams"
+    # Create output directory (mode-aware via BASE_OUTPUT_DIR from config)
+    output_dir = Path(BASE_OUTPUT_DIR) / "Comparisons" / "taylor_diagrams"
     output_dir.mkdir(parents=True, exist_ok=True)
     logger.info(f"📁 Output directory: {output_dir}")
     logger.info("")
@@ -588,7 +585,7 @@ def main():
     # Load reference data (ERA5)
     logger.info("📂 Loading reference data (ERA5)...")
     ref_config = REFERENCE_SOURCE
-    ref_results_file = base_dir / "LEC_Results" / ref_config["path"]
+    ref_results_file = Path(BASE_RESULTS_DIR) / ref_config["path"]
     
     # Find the results CSV file
     ref_csv_files = list(ref_results_file.glob("*_results.csv"))
@@ -608,7 +605,7 @@ def main():
     all_data = {"ERA5": ref_df}
     
     for model_name, model_config in MODEL_SOURCES.items():
-        model_path = base_dir / "LEC_Results" / model_config["path"]
+        model_path = Path(BASE_RESULTS_DIR) / model_config["path"]
         csv_files = list(model_path.glob("*_results.csv"))
         
         if csv_files:

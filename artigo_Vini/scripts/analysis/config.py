@@ -17,8 +17,24 @@ Author: Danilo
 Date: 2025
 """
 
+import os
 from pathlib import Path
 import matplotlib.pyplot as plt
+
+# ============================================================================
+# ANALYSIS MODE
+# ============================================================================
+
+# Set ANALYSIS_MODE to "fixed" or "semi_lagrangian".
+# Can be overridden at runtime by the environment variable ANALYSIS_MODE.
+# Default: "fixed"
+ANALYSIS_MODE = os.environ.get("ANALYSIS_MODE", "fixed")
+
+if ANALYSIS_MODE not in ("fixed", "semi_lagrangian"):
+    raise ValueError(
+        f"Invalid ANALYSIS_MODE: '{ANALYSIS_MODE}'. "
+        "Must be 'fixed' or 'semi_lagrangian'."
+    )
 
 # ============================================================================
 # DIRECTORY PATHS
@@ -31,13 +47,22 @@ _CONFIG_DIR = Path(__file__).parent.resolve()
 # scripts/analysis -> scripts -> artigo_Vini
 _ARTIGO_VINI_DIR = _CONFIG_DIR.parent.parent
 
-BASE_RESULTS_DIR = str(_ARTIGO_VINI_DIR / "LEC_Results")
-BASE_OUTPUT_DIR = str(_ARTIGO_VINI_DIR / "Figures")
+# Mode-specific results directories
+BASE_RESULTS_DIRS = {
+    "fixed": str(_ARTIGO_VINI_DIR / "LEC_Results" / "fixed"),
+    "semi_lagrangian": str(_ARTIGO_VINI_DIR / "LEC_Results" / "semi_lagrangian"),
+}
+
+BASE_RESULTS_DIR = BASE_RESULTS_DIRS[ANALYSIS_MODE]
+
+# Output figures are organized by mode into separate subfolders
+BASE_OUTPUT_DIR = str(_ARTIGO_VINI_DIR / "Figures" / ANALYSIS_MODE)
 
 # ============================================================================
 # EXPERIMENT DEFINITIONS
 # ============================================================================
 
+<<<<<<< HEAD
 # Data sources - actual folder names in LEC_Results
 DATA_SOURCES = {
     "ERA5": {
@@ -88,10 +113,60 @@ DATA_SOURCES = {
         "marker": "o",
         "zorder": 1,
     }
+=======
+# Shared display properties (labels, colors, etc.) used by both modes
+_SOURCE_DISPLAY = {
+    "ERA5":     {"label": "ERA5",     "color": "#2c3e50", "linestyle": "-",  "marker": "o", "zorder": 6},
+    "GFS":      {"label": "GFS",      "color": "#27ae60", "linestyle": "-",  "marker": "s", "zorder": 5},
+    "GFS_CPL":  {"label": "GFS_CPL",  "color": "#e74c3c", "linestyle": "-",  "marker": "^", "zorder": 4},
+    "GFS_DCP":  {"label": "GFS_DCP",  "color": "#3498db", "linestyle": "--", "marker": "v", "zorder": 3},
+    "ERA5_CPL": {"label": "ERA5_CPL", "color": "#9b59b6", "linestyle": "-",  "marker": "D", "zorder": 2},
+    "ERA5_DCP": {"label": "ERA5_DCP", "color": "#f39c12", "linestyle": "--", "marker": "p", "zorder": 1},
+>>>>>>> 8aae41949da088b0cd16bb8ebb1b51014e52f45b
 }
 
+# Folder paths inside LEC_Results/fixed
+_PATHS_FIXED = {
+    "ERA5":     "Raoni_ERA5_fixed",
+    "GFS":      "GFS_Raoni_processed_fixed",
+    "GFS_CPL":  "GFS_COAWST_Acoplado_processed_fixed",
+    "GFS_DCP":  "GFS_COAWST_SEM_Acoplamento_processed_fixed",
+    "ERA5_CPL": "ERA5_COAWST_Acoplado_processed_fixed",
+    "ERA5_DCP": "ERA5_COAWST_Sem_Aco_processed_fixed",
+}
+
+# Folder paths inside LEC_Results/semi_lagrangian
+_PATHS_SEMI_LAGRANGIAN = {
+    "ERA5":     "era5_lorenz_final_track",
+    "GFS":      "gfs_lorenz_final_track",
+    "GFS_CPL":  "GFS_COAWST_Acoplado_processed_track",
+    "GFS_DCP":  "GFS_COAWST_SEM_Acoplamento_processed_track",
+    "ERA5_CPL": "ERA5_COAWST_Acoplado_processed_track",
+    "ERA5_DCP": "ERA5_COAWST_Sem_Aco_processed_track",
+}
+
+_PATHS_BY_MODE = {
+    "fixed": _PATHS_FIXED,
+    "semi_lagrangian": _PATHS_SEMI_LAGRANGIAN,
+}
+
+# Build DATA_SOURCES for both modes (used by downstream scripts via DATA_SOURCES)
+DATA_SOURCES_FIXED = {
+    key: {"path": _PATHS_FIXED[key], **_SOURCE_DISPLAY[key]}
+    for key in _SOURCE_DISPLAY
+}
+
+DATA_SOURCES_SEMI_LAGRANGIAN = {
+    key: {"path": _PATHS_SEMI_LAGRANGIAN[key], **_SOURCE_DISPLAY[key]}
+    for key in _SOURCE_DISPLAY
+}
+
+# Active DATA_SOURCES for the current ANALYSIS_MODE
+DATA_SOURCES = DATA_SOURCES_FIXED if ANALYSIS_MODE == "fixed" else DATA_SOURCES_SEMI_LAGRANGIAN
+
 # Optional periods files for each source (set to None if not available)
-PERIODS_FILES = {
+# Keys are the folder names used in the active ANALYSIS_MODE
+_PERIODS_FILES_FIXED = {
     "Raoni_ERA5_fixed": None,
     "GFS_Raoni_processed_fixed": None,
     "GFS_COAWST_Acoplado_processed_fixed": None,
@@ -100,10 +175,25 @@ PERIODS_FILES = {
     "ERA5_COAWST_Sem_Aco_processed_fixed": None,
 }
 
-# Reference dataset for Taylor diagrams
+_PERIODS_FILES_SEMI_LAGRANGIAN = {
+    "era5_lorenz_final_track": None,
+    "gfs_lorenz_final_track": None,
+    "GFS_COAWST_Acoplado_processed_track": None,
+    "GFS_COAWST_SEM_Acoplamento_processed_track": None,
+    "ERA5_COAWST_Acoplado_processed_track": None,
+    "ERA5_COAWST_Sem_Aco_processed_track": None,
+}
+
+PERIODS_FILES = (
+    _PERIODS_FILES_FIXED
+    if ANALYSIS_MODE == "fixed"
+    else _PERIODS_FILES_SEMI_LAGRANGIAN
+)
+
+# Reference dataset for Taylor diagrams (path is mode-aware)
 REFERENCE_SOURCE = {
     "key": "ERA5",
-    "path": "Raoni_ERA5_fixed",
+    "path": DATA_SOURCES["ERA5"]["path"],
     "label": "ERA5",
 }
 
@@ -377,7 +467,11 @@ def validate_config():
     """Validate that all configured paths exist."""
     import sys
     errors = []
-    
+
+    print(f"  Mode: {ANALYSIS_MODE}")
+    print(f"  Results dir: {BASE_RESULTS_DIR}")
+    print(f"  Output dir: {BASE_OUTPUT_DIR}")
+
     # Check if results directories exist
     for key, source_info in DATA_SOURCES.items():
         results_dir = Path(BASE_RESULTS_DIR) / source_info["path"]

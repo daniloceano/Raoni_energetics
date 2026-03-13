@@ -4,17 +4,23 @@
 Run All Analysis Scripts for Raoni Energetics
 ==============================================
 
-This script executes all analysis scripts in the correct sequence:
-1. plot_hovmoller_individual.py - Hovmöller diagrams for all sources
-2. plot_LEC_individual.py - LEC diagrams for all sources
-3. plot_timeseries_comparison_multiplot.py - Multi-panel comparisons
-4. plot_taylor_diagrams.py - Taylor diagram comparisons
+This script executes all analysis scripts in the correct sequence for both
+analysis modes (fixed and semi_lagrangian):
+  1. plot_hovmoller_individual.py - Hovmöller diagrams for all sources
+  2. plot_LEC_individual.py - LEC diagrams for all sources
+  3. plot_timeseries_comparison_multiplot.py - Multi-panel comparisons
+  4. plot_taylor_diagrams.py - Taylor diagram comparisons
+
+Figures are saved in separate subfolders per mode:
+  Figures/fixed/
+  Figures/semi_lagrangian/
 
 Author: Danilo
 Date: 2025
 """
 
 import sys
+import os
 import subprocess
 from pathlib import Path
 import logging
@@ -36,6 +42,14 @@ def setup_logger() -> logging.Logger:
     return logger
 
 logger = setup_logger()
+
+# ============================================================================
+# MODE DEFINITIONS
+# ============================================================================
+
+# Both modes that will be executed in sequence.
+# Each produces figures in Figures/<mode>/
+ANALYSIS_MODES = ["fixed", "semi_lagrangian"]
 
 # ============================================================================
 # SCRIPT DEFINITIONS
@@ -68,14 +82,15 @@ SCRIPTS = [
 # EXECUTION FUNCTIONS
 # ============================================================================
 
-def run_script(script_info: dict, script_dir: Path) -> bool:
+def run_script(script_info: dict, script_dir: Path, mode: str) -> bool:
     """
-    Run a single analysis script.
-    
+    Run a single analysis script with a given ANALYSIS_MODE.
+
     Args:
         script_info: Dictionary with script information
         script_dir: Directory containing the scripts
-        
+        mode: One of 'fixed' or 'semi_lagrangian'
+
     Returns:
         True if successful, False otherwise
     """
@@ -87,11 +102,15 @@ def run_script(script_info: dict, script_dir: Path) -> bool:
     
     logger.info("")
     logger.info("=" * 80)
-    logger.info(f"📊 Running: {script_info['name']}")
+    logger.info(f"📊 [{mode}] Running: {script_info['name']}")
     logger.info(f"   {script_info['description']}")
     logger.info("=" * 80)
     logger.info("")
     
+    # Build environment with ANALYSIS_MODE set
+    env = os.environ.copy()
+    env["ANALYSIS_MODE"] = mode
+
     try:
         # Run the script using Python
         result = subprocess.run(
@@ -99,7 +118,8 @@ def run_script(script_info: dict, script_dir: Path) -> bool:
             cwd=script_dir,
             capture_output=False,
             text=True,
-            check=True
+            check=True,
+            env=env,
         )
         
         logger.info("")
@@ -118,85 +138,97 @@ def run_script(script_info: dict, script_dir: Path) -> bool:
 
 def main():
     """
-    Main execution function.
+    Main execution function – runs all scripts for both analysis modes.
     """
     logger.info("")
     logger.info("=" * 80)
     logger.info("🚀 RAONI ENERGETICS ANALYSIS - RUN ALL SCRIPTS")
     logger.info("=" * 80)
     logger.info("")
-    logger.info(f"Total scripts to run: {len(SCRIPTS)}")
+    logger.info(f"Modes to process : {', '.join(ANALYSIS_MODES)}")
+    logger.info(f"Scripts per mode : {len(SCRIPTS)}")
+    logger.info(f"Total script runs: {len(ANALYSIS_MODES) * len(SCRIPTS)}")
     logger.info("")
-    
+
     # Get script directory
     script_dir = Path(__file__).parent
-    
-    # Validate configuration first
-    logger.info("🔍 Validating configuration...")
-    try:
-        # Import config to validate
-        sys.path.insert(0, str(script_dir))
-        from config import validate_config
-        
-        if not validate_config():
-            logger.error("")
-            logger.error("❌ Configuration validation failed!")
-            logger.error("   Please check config.py and ensure all paths are correct")
-            logger.error("")
-            return 1
-        
-        logger.info("✅ Configuration is valid")
-    except Exception as e:
-        logger.error(f"❌ Error loading configuration: {e}")
-        return 1
-    
-    # Run all scripts
-    success_count = 0
-    failed_scripts = []
-    
-    for i, script_info in enumerate(SCRIPTS, 1):
-        logger.info(f"[{i}/{len(SCRIPTS)}] Starting: {script_info['name']}...")
-        
-        if run_script(script_info, script_dir):
-            success_count += 1
-        else:
-            failed_scripts.append(script_info['name'])
-            
-            # Ask if user wants to continue
-            logger.warning("")
-            logger.warning("⚠️  Script failed! Do you want to continue with remaining scripts?")
-            logger.warning("   Press Enter to continue, or Ctrl+C to abort...")
-            try:
-                input()
-            except KeyboardInterrupt:
-                logger.info("")
-                logger.info("🛑 Aborted by user")
-                break
-    
-    # Final summary
+
+    # Accumulate results across modes
+    mode_summaries = {}
+
+    for mode in ANALYSIS_MODES:
+        logger.info("")
+        logger.info("#" * 80)
+        logger.info(f"#  MODE: {mode.upper()}")
+        logger.info("#" * 80)
+
+        # Validate configuration for this mode
+        logger.info(f"\n🔍 Validating configuration for mode '{mode}'...")
+        try:
+            sys.path.insert(0, str(script_dir))
+            # Re-import config with the target mode active
+            import importlib
+            os.environ["ANALYSIS_MODE"] = mode
+            import config as _cfg
+            importlib.reload(_cfg)
+            if not _cfg.validate_config():
+                logger.error(f"❌ Configuration validation failed for mode '{mode}'!")
+                logger.error("   Skipping this mode.")
+                mode_summaries[mode] = {"success": 0, "failed": list(s["name"] for s in SCRIPTS)}
+                continue
+            logger.info(f"✅ Configuration valid for mode '{mode}'")
+        except Exception as e:
+            logger.error(f"❌ Error loading configuration for mode '{mode}': {e}")
+            mode_summaries[mode] = {"success": 0, "failed": list(s["name"] for s in SCRIPTS)}
+            continue
+
+        # Run all scripts for this mode
+        success_count = 0
+        failed_scripts = []
+
+        for i, script_info in enumerate(SCRIPTS, 1):
+            logger.info(f"[{i}/{len(SCRIPTS)}] Starting: {script_info['name']}...")
+
+            if run_script(script_info, script_dir, mode):
+                success_count += 1
+            else:
+                failed_scripts.append(script_info["name"])
+
+                logger.warning("")
+                logger.warning("⚠️  Script failed! Do you want to continue with remaining scripts?")
+                logger.warning("   Press Enter to continue, or Ctrl+C to abort...")
+                try:
+                    input()
+                except KeyboardInterrupt:
+                    logger.info("")
+                    logger.info("🛑 Aborted by user")
+                    mode_summaries[mode] = {"success": success_count, "failed": failed_scripts}
+                    _print_final_summary(mode_summaries)
+                    return 1
+
+        mode_summaries[mode] = {"success": success_count, "failed": failed_scripts}
+
+    _print_final_summary(mode_summaries)
+    total_failed = sum(len(v["failed"]) for v in mode_summaries.values())
+    return 0 if total_failed == 0 else 1
+
+
+def _print_final_summary(mode_summaries: dict):
+    """Print a per-mode and overall execution summary."""
+    total_scripts = len(SCRIPTS)
     logger.info("")
     logger.info("=" * 80)
     logger.info("📊 EXECUTION SUMMARY")
     logger.info("=" * 80)
-    logger.info(f"Total scripts: {len(SCRIPTS)}")
-    logger.info(f"Successful: {success_count}")
-    logger.info(f"Failed: {len(failed_scripts)}")
-    
-    if failed_scripts:
-        logger.info("")
-        logger.info("Failed scripts:")
-        for script_name in failed_scripts:
-            logger.info(f"  - {script_name}")
-    
+    for mode, result in mode_summaries.items():
+        status = "✅" if not result["failed"] else "⚠️ "
+        logger.info(
+            f"{status} [{mode}]  {result['success']}/{total_scripts} scripts OK"
+        )
+        for name in result["failed"]:
+            logger.info(f"       ❌ {name}")
     logger.info("=" * 80)
     logger.info("")
-    
-    if success_count == len(SCRIPTS):
-        logger.info("🎉 All scripts completed successfully!")
-        return 0
-    else:
-        logger.warning(f"⚠️  {len(failed_scripts)} script(s) failed")
-        return 1
 
 # ============================================================================
 # SCRIPT ENTRY POINT
