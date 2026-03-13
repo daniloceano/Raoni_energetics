@@ -62,67 +62,14 @@ BASE_OUTPUT_DIR = str(_ARTIGO_VINI_DIR / "Figures" / ANALYSIS_MODE)
 # EXPERIMENT DEFINITIONS
 # ============================================================================
 
-<<<<<<< HEAD
-# Data sources - actual folder names in LEC_Results
-DATA_SOURCES = {
-    "ERA5": {
-        "path": "Raoni_ERA5_fixed",
-        "label": "ERA5",
-        "color": "#2627ff",      # Dark blue-gray
-        "linestyle": "-",
-        "marker": "s",
-        "zorder": 6,
-    },
-    "GFS": {
-        "path": "GFS_Raoni_processed_fixed",
-        "label": "GFS",
-        "color": "#db4848",      # Green
-        "linestyle": "-",
-        "marker": "s",
-        "zorder": 5,
-    },
-    "GFS_CPL": {
-        "path": "GFS_COAWST_Acoplado_processed_fixed",
-        "label": "GFS_CPL",
-        "color": "#ed8679",      # Red (GFS coupled)
-        "linestyle": "-",
-        "marker": "^",
-        "zorder": 4,
-    },
-    "GFS_DCP": {
-        "path": "GFS_COAWST_SEM_Acoplamento_processed_fixed",
-        "label": "GFS_DCP",
-        "color": "#ed8679",      # Blue (GFS decoupled)
-        "linestyle": "--",
-        "marker": "o",
-        "zorder": 3,
-    },
-    "ERA5_CPL": {
-        "path": "ERA5_COAWST_Acoplado_processed_fixed",
-        "label": "ERA5_CPL",
-        "color": "#74b8e5",      # Purple (ERA5 coupled)
-        "linestyle": "-",
-        "marker": "^",
-        "zorder": 2,
-    },
-    "ERA5_DCP": {
-        "path": "ERA5_COAWST_Sem_Aco_processed_fixed",
-        "label": "ERA5_DCP",
-        "color": "#74b8e5",      # Orange (ERA5 decoupled)
-        "linestyle": "--",
-        "marker": "o",
-        "zorder": 1,
-    }
-=======
 # Shared display properties (labels, colors, etc.) used by both modes
 _SOURCE_DISPLAY = {
-    "ERA5":     {"label": "ERA5",     "color": "#2c3e50", "linestyle": "-",  "marker": "o", "zorder": 6},
-    "GFS":      {"label": "GFS",      "color": "#27ae60", "linestyle": "-",  "marker": "s", "zorder": 5},
-    "GFS_CPL":  {"label": "GFS_CPL",  "color": "#e74c3c", "linestyle": "-",  "marker": "^", "zorder": 4},
-    "GFS_DCP":  {"label": "GFS_DCP",  "color": "#3498db", "linestyle": "--", "marker": "v", "zorder": 3},
-    "ERA5_CPL": {"label": "ERA5_CPL", "color": "#9b59b6", "linestyle": "-",  "marker": "D", "zorder": 2},
-    "ERA5_DCP": {"label": "ERA5_DCP", "color": "#f39c12", "linestyle": "--", "marker": "p", "zorder": 1},
->>>>>>> 8aae41949da088b0cd16bb8ebb1b51014e52f45b
+    "ERA5":     {"label": "ERA5",     "color": "#2627ff", "linestyle": "-",  "marker": "s", "zorder": 6},
+    "GFS":      {"label": "GFS",      "color": "#e74c3c", "linestyle": "-",  "marker": "s", "zorder": 5},
+    "GFS_CPL":  {"label": "GFS_CPL",  "color": "#ed857a", "linestyle": "-",  "marker": "^", "zorder": 4},
+    "GFS_DCP":  {"label": "GFS_DCP",  "color": "#ed857a", "linestyle": "--", "marker": "o", "zorder": 3},
+    "ERA5_CPL": {"label": "ERA5_CPL", "color": "#74b8e5", "linestyle": "-",  "marker": "^", "zorder": 2},
+    "ERA5_DCP": {"label": "ERA5_DCP", "color": "#74b8e5", "linestyle": "--", "marker": "o", "zorder": 1},
 }
 
 # Folder paths inside LEC_Results/fixed

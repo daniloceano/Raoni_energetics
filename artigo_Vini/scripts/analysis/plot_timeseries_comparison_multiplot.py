@@ -258,7 +258,7 @@ def create_multiplot_figure(all_data: Dict[str, pd.DataFrame],
             if fig_key == "energy":
                 try:
                     # Position in axes coordinates (left of axis)
-                    # offset_text.set_transform(ax.transAxes)
+                    offset_text = ax.yaxis.get_offset_text()
                     offset_text.set_position((-0.12, 1.02))
                     offset_text.set_horizontalalignment('left')
                     ax.yaxis.get_offset_text().set_visible(True)
